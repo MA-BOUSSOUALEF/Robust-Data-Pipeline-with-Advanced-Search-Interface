@@ -2,7 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
+import os 
 
+load_dotenv()
 app = FastAPI()
 
 app.add_middleware(
@@ -16,11 +19,11 @@ app.add_middleware(
 def get_db_connection():
     try:
         conn = psycopg2.connect (
-        host = '172.25.112.1',
-        dbname = 'cartorecherche_ut3_projet_etudiant_db',
-        user = 'postgres',
-        password = 'Aminereal2002@',
-        port ='5432',
+        host=os.getenv("DB_HOST"),
+        dbname=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        port=os.getenv("DB_PORT"),
         cursor_factory=RealDictCursor,
         )
         return conn
@@ -45,4 +48,3 @@ def get_d_tes():
     finally:
         conn.close()  
 
-user = get_d_tes()

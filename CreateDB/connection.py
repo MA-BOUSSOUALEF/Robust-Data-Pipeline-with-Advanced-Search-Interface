@@ -2,12 +2,17 @@ import psycopg2
 from psycopg2.extras import execute_values
 import os
 import pandas as pd
+from dotenv import load_dotenv
+import os 
+
+load_dotenv()
+
 # Informations de connexion à PostgreSQL
-hostname = '172.25.112.1'
-database = 'cartorecherche_ut3_projet_etudiant_db'
-username = 'postgres'
-pwd = 'Aminereal2002@'
-port_id = 5432
+hostname = os.getenv("DB_HOST")
+database = os.getenv("DB_NAME")
+username = os.getenv("DB_USER")
+pwd = os.getenv("DB_PASSWORD")
+port_id = os.getenv("DB_PORT")
 # Étape 3 : Création des tables dans PostgreSQL
 def create_tables(conn):
     try:
