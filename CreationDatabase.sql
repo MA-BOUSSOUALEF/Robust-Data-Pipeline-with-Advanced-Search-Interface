@@ -267,15 +267,15 @@
             
             CREATE TABLE IF NOT EXISTS J_pf_infra_nationale (
             J_PF_Nom VARCHAR(255),
-            J_Infra_Nationale_Acronyme VARCHAR(255),
-            PRIMARY KEY (J_PF_Nom, J_Infra_Nationale_Acronyme),
+            J_Infra_Nat_Acronyme VARCHAR(255),
+            PRIMARY KEY (J_PF_Nom, J_Infra_Nat_Acronyme),
             CONSTRAINT fk_J_PF_Infra_Nationale_J_PF_Nom
             FOREIGN KEY (J_PF_Nom)
             REFERENCES cartorecherche_ut3_projet_etudiant_db.Ref_plateformes (PF_Nom)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
             CONSTRAINT fk_J_pf_infra_nationale_Ref_infrastructures_nationales1
-            FOREIGN KEY (J_Infra_Nationale_Acronyme)
+            FOREIGN KEY (J_Infra_Nat_Acronyme)
             REFERENCES cartorecherche_ut3_projet_etudiant_db.Ref_infrastructures_nationales (Infra_Nationale_Acronyme)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
@@ -283,16 +283,16 @@
             
             
             CREATE TABLE IF NOT EXISTS J_sous_struct_localisation (
-            J_Sous_Struct_Num VARCHAR(255),
-            J_Loc_Site VARCHAR(255),
-            PRIMARY KEY (J_Sous_Struct_Num, J_Loc_Site),
+            j_ss_struct_num VARCHAR(255),
+            j_localisation VARCHAR(255),
+            PRIMARY KEY (j_ss_struct_num, j_localisation),
             CONSTRAINT fk_J_sous_struct_localisation_D_sous_structures
-            FOREIGN KEY (J_Sous_Struct_Num)
+            FOREIGN KEY (j_ss_struct_num)
             REFERENCES cartorecherche_ut3_projet_etudiant_db.D_sous_structures (Ss_Struct_Num)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
             CONSTRAINT fk_J_sous_struct_localisation_Ref_localisations
-            FOREIGN KEY (J_Loc_Site)
+            FOREIGN KEY (j_localisation)
             REFERENCES cartorecherche_ut3_projet_etudiant_db.Ref_localisations (Loc_Site)
             ON DELETE CASCADE
             ON UPDATE CASCADE
@@ -319,6 +319,7 @@
             CREATE TABLE IF NOT EXISTS Ref_federations (
             Fede_Nom VARCHAR(255),
             Fede_Acronyme VARCHAR(255),
+            fede_nom_en VARCHAR(255),
             PRIMARY KEY (Fede_Acronyme)
             );
             
@@ -343,6 +344,7 @@
             CREATE TABLE IF NOT EXISTS Ref_tutelles (
             Tutelle_Acronyme VARCHAR(255),
             Tutelle_Nom VARCHAR(255),
+            tutelle_nom_en VARCHAR(255),
             PRIMARY KEY (Tutelle_Acronyme)
             );
             
@@ -350,6 +352,7 @@
             CREATE TABLE IF NOT EXISTS J_struct_tutelle (
             J_Struct_Num VARCHAR(255),
             J_Tutelle_Acronyme VARCHAR(255),
+            tutelle_gestionnaire_o_n VARCHAR(25),
             PRIMARY KEY (J_Struct_Num, J_Tutelle_Acronyme),
             CONSTRAINT fk_J_struct_tutelle_D_structures
             FOREIGN KEY (J_Struct_Num)
@@ -365,8 +368,9 @@
             
             
             CREATE TABLE IF NOT EXISTS Ref_type_sous_structuration (
-            Type_Sous_Struct VARCHAR(255),
-            PRIMARY KEY (Type_Sous_Struct)
+            Type_Ss_Struct VARCHAR(255),
+            Type_Ss_Struct_En VARCHAR(255),
+            PRIMARY KEY (Type_Ss_Struct)
             );
             
             
@@ -415,8 +419,8 @@
             TES_Fr TEXT NULL DEFAULT NULL,
             TES_En VARCHAR(255) NULL DEFAULT NULL,
             TES_Ss_Struct_Num VARCHAR(255) NULL DEFAULT NULL,
-            "Transition écologique" VARCHAR(255) NULL DEFAULT NULL,
-            "Transition sociétale" VARCHAR(255) NULL DEFAULT NULL
+            Transition_Ecologique VARCHAR(255) NULL DEFAULT NULL,
+            Transition_Societale VARCHAR(255) NULL DEFAULT NULL
             );
             
             

@@ -81,10 +81,9 @@ def insert_data_to_postgresql(dataframe, table_name, conn):
             # Générer les colonnes
             columns = ', '.join(dataframe.columns)
             query = f"INSERT INTO cartorecherche_ut3_projet_etudiant_db.{table_name} ({columns}) VALUES %s"
-
+            
             # Transformer les données en une liste de tuples
             values = [tuple(row) for row in dataframe.itertuples(index=False, name=None)]
-
             # Utiliser execute_values pour l'insertion
             execute_values(cursor, query, values)
 
@@ -118,8 +117,17 @@ def main():
                 print(f"Traitement du fichier : {excel_file}")
                 # Lire le fichier Excel dans un DataFrame
                 dataframe = pd.read_excel(excel_file)
-
+                if table_name == "ref_infrastructures_europeennes" or table_name == "Ref_Nomenclature_HCERES":  
+                 dataframe = dataframe.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                 
                 # Insérer les données dans la table PostgreSQL
+                elif table_name == "D_TES":
+                  # Renommer les colonnes spécifiques
+                  dataframe = dataframe.rename(columns={
+                      "Transition écologique?": "Transition_Ecologique",
+                      "Transition sociétale?": "Transition_Societale"
+                  })
+                  
                 insert_data_to_postgresql(dataframe, table_name, conn)
             else:
                 print(f"Fichier Excel pour la table '{table_name}' non trouvé dans le répertoire.")
