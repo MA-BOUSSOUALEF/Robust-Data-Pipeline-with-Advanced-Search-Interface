@@ -10,7 +10,7 @@ async function chargerSousDomaines() {
         const select = document.getElementById("ss_domaine-list");
         if (!select) {
             console.error("Élément #domaine-list introuvable dans le DOM");
-            return;
+            return; 
         }
         // Réinitialiser le contenu
         select.innerHTML = '<option value="">Sélectionnez un sous domaine</option>';
