@@ -50,7 +50,7 @@ def get_Ct_ss_Domaine():
         return {"error": str(e)}
     finally:
         conn.close()  
-
+ 
 
 # Api de Domaine From Table J_Ct_Domaine
 @app.get("/api/Domaine")
