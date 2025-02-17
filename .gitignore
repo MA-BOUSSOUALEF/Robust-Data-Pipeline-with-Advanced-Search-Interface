@@ -1,1 +1,5 @@
 .env
+Data_Projet/
+venv/
+CreateDB/
+FrontEnd/
