@@ -1,5 +1,6 @@
 const API_URL = "http://localhost:8000/api/";
-
+ 
+// charger les sous domaines 
 async function chargerSousDomaines() {
     try {
         const response = await fetch(API_URL + "Sous_Domaine");
@@ -10,7 +11,7 @@ async function chargerSousDomaines() {
         const select = document.getElementById("ss_domaine-list");
         if (!select) {
             console.error("Élément #domaine-list introuvable dans le DOM");
-            return;
+            return; 
         }
         // Réinitialiser le contenu
         select.innerHTML = '<option value="">Sélectionnez un sous domaine</option>';
@@ -36,15 +37,8 @@ async function chargerSousDomaines() {
         alert("Impossible de charger les domaines !");
     }
 }
-// Charger les Sous domaines au chargement de la page
-document.addEventListener("DOMContentLoaded", chargerSousDomaines);
 
-
-
-
-
-
-
+//charger les domaines 
 async function chargerDomaines() {
   try {
       const response = await fetch(API_URL + "Domaine");
@@ -81,14 +75,10 @@ async function chargerDomaines() {
       alert("Impossible de charger les domaines !");
   }
 }
-// Charger les domaines au chargement de la page
-document.addEventListener("DOMContentLoaded", chargerDomaines);
 
-
-
-
-
+//charger les technologies 
 async function chargerTechno() {
+  console.log('techno')
   try {
       const response = await fetch(API_URL + "techno");
       if (!response.ok) throw new Error("Erreur lors de la récupération des Technos");
@@ -124,10 +114,13 @@ async function chargerTechno() {
       alert("Impossible de charger les technos !");
   }
 }
+
 // Charger les technos au chargement de la page
 document.addEventListener("DOMContentLoaded", chargerTechno);
-
-
+// Charger les domaines au chargement de la page
+document.addEventListener("DOMContentLoaded", chargerDomaines);
+// Charger les Sous domaines au chargement de la page
+document.addEventListener("DOMContentLoaded", chargerSousDomaines);
 
 
 
@@ -174,5 +167,92 @@ searchInput.addEventListener("input", () => {
     suggestionsList.innerHTML = "";  // Effacer la liste si la recherche est vide
   }
 });
+
+
+
+
+///////////////////////////////////////////////////////////////////////remplissage des champs//////////////////////////////////////////////
+// Charger la description de la compétence
+async function chargerDescription() {
+  try {
+    const query = document.getElementById("search-input").value.trim();
+    if (!query) {
+      console.warn("Le champ de recherche est vide.");
+      return;
+    }
+    console.log(query);
+    const techo_reponse = await fetch(API_URL + "J_techno");
+    const response = await fetch(API_URL + "competence");
+    const domaine_response = await fetch(API_URL + "J_domaine");
+    const platforme_response = await fetch(API_URL + "platform");
+    if (!response.ok) throw new Error("Erreur lors de la récupération des compétences");
+     
+    const competences = await response.json();
+    const techno = await techo_reponse.json();
+    const domaine = await domaine_response.json();
+    const platforme = await platforme_response.json();
+
+
+    const description = document.getElementById("description");
+    const platforme_text = document.getElementById("platform"); 
+    const techno_text = document.getElementById("techno");
+    const domaine_text = document.getElementById("domaine");
+    const ss_domaine = document.getElementById("sous_domaine");
+    const plateau = document.getElementById("plateau");
+
+    if (!description || !platforme_text || !techno_text || !domaine_text || !ss_domaine || !plateau) {
+      alert("Un ou plusieurs éléments DOM sont introuvables.");
+    }
+
+    // Trouver la compétence correspondant à l'intitulé recherché
+    const competenceTrouvee = competences.find(c => c.ct_intitule_court_fr === query);
+    const technoTrouvee = techno.find(t => t.j_ct_num === competenceTrouvee.ct_num);
+    const domaineTrouvee = domaine.find(d => d.j_ct_num === competenceTrouvee.ct_num);
+    const platformeTrouvee = platforme.find(p => p.j_ct_num === competenceTrouvee.ct_num);
+   
+    if (!competenceTrouvee) {
+          description.value = "Aucune description disponible.";
+      
+        }
+    else 
+        {
+          description.value = competenceTrouvee.ct_description_fr ;
+        }
+    if (!technoTrouvee) {
+          techno_text.value = "Aucune techno disponible." ;
+        }
+    else 
+        {
+          techno_text.value = technoTrouvee.j_ct_techno_fr
+        }
+    if (!domaineTrouvee) {
+          domaine_text.value = "Aucun domaine disponible." ;
+        }
+    else 
+        {
+          domaine_text.value = domaineTrouvee.j_ct_domaine ;
+        }
+    if (!platformeTrouvee) {
+          platforme_text.value = "Aucune plateforme disponible." ;
+        }
+    else 
+        {
+          platforme_text.value = platformeTrouvee.j_pf_nom ;
+        }
+
+    ss_domaine.textContent  = competenceTrouvee.ct_ss_domaine ;
+    plateau.textContent  = competenceTrouvee.ct_plateau ;
+
+
+  } catch (error) {
+    console.error("Erreur lors du chargement des competences :", error);
+    alert("Impossible de charger les competences !");
+  }
+}
+// Charger la description au clic sur le bouton
+document.getElementById("recherche").addEventListener("click", chargerDescription);
+
+
+// Charger techno et domaine au clic sur le bouton
 
 
