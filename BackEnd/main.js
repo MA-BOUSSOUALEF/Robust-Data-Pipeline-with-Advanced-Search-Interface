@@ -85,10 +85,8 @@ async function chargerDomaines() {
 document.addEventListener("DOMContentLoaded", chargerDomaines);
 
 
-
-
-
 async function chargerTechno() {
+  console.log('techno')
   try {
       const response = await fetch(API_URL + "techno");
       if (!response.ok) throw new Error("Erreur lors de la récupération des Technos");
@@ -175,4 +173,57 @@ searchInput.addEventListener("input", () => {
   }
 });
 
+
+
+
+///////////////////////////////////////////////////////////////////////remplissage des champs//////////////////////////////////////////////
+async function chargerDescription() {
+  console.log("Le bouton a été cliqué");
+
+  try {
+    const query = document.getElementById("search-input").value.trim();
+    if (!query) {
+      console.warn("Le champ de recherche est vide.");
+      return;
+    }
+    console.log(query);
+    // const response = await fetch(API_URL + "competence");
+    // if (!response.ok) throw new Error("Erreur lors de la récupération des compétences");
+     
+    // const competences = await response.json();
+    // console.log(competences);
+
+    // const textarea = document.getElementById("description");
+    // if (!textarea) {
+    //   console.error("Élément #description-textarea introuvable dans le DOM");
+    //   return;
+    // }
+
+    // // Trouver la compétence correspondant à l'intitulé recherché
+    // const competenceTrouvee = competences.find(c => c.ct_intitule_court_fr === query);
+
+    // if (!competenceTrouvee) {
+    //   console.warn("Aucune compétence trouvée pour cet intitulé.");
+    //   textarea.value = "Aucune description disponible.";
+    //   return;
+    // }
+
+    textarea.value = "hhhhhh";
+
+  } catch (error) {
+    console.error("Erreur lors du chargement de la description :", error);
+    alert("Impossible de charger la description !");
+  }
+}
+const button = document.getElementById("recherche");
+
+if (button) {
+    console.log("Le bouton a été trouvé !");
+    button.addEventListener("click", function () {
+        alert("Le bouton a été cliqué !");
+        console.log("Bouton cliqué !");
+    });
+} else {
+    console.error("Le bouton n'a pas été trouvé !");
+}
 
