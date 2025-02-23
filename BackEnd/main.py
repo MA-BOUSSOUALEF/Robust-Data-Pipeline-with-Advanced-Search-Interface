@@ -116,7 +116,7 @@ def get_techno():
     try:
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
-        cursor.execute(f"SELECT  ct_num , ct_intitule_court_fr , ct_description_fr , ct_plateau , ct_ss_domaine  FROM cartorecherche_ut3_projet_etudiant_db.d_competences_techniques")  
+        cursor.execute(f"SELECT  ct_num , ct_intitule_court_fr , ct_description_fr , ct_plateau , ct_ss_domaine,ct_url  FROM cartorecherche_ut3_projet_etudiant_db.d_competences_techniques")  
         techno = cursor.fetchall() 
         return techno
     except Exception as e:
@@ -295,9 +295,8 @@ def get_Platform_ct_num():
         return JSONResponse(content={"error": str(e)}, status_code=500)
     finally:
         cursor.close()
+        
         conn.close()
-
-
 
 
 
