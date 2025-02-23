@@ -38,6 +38,7 @@ async function chargerSousDomaines() {
     }
 }
 
+
 //charger les domaines 
 async function chargerDomaines() {
   try {
@@ -125,6 +126,7 @@ document.addEventListener("DOMContentLoaded", chargerSousDomaines);
 
 
 
+
 // obtenir les suggestions depuis l'API
 const searchInput = document.getElementById("search-input");
 const suggestionsList = document.getElementById("suggestions-list");
@@ -172,6 +174,7 @@ searchInput.addEventListener("input", () => {
 
 
 ///////////////////////////////////////////////////////////////////////remplissage des champs//////////////////////////////////////////////
+
 // Charger la description de la compétence
 async function chargerDescription() {
   try {
@@ -191,6 +194,7 @@ async function chargerDescription() {
     const techno = await techo_reponse.json();
     const domaine = await domaine_response.json();
     const platforme = await platforme_response.json();
+      
 
 
     const description = document.getElementById("description");
@@ -199,16 +203,19 @@ async function chargerDescription() {
     const domaine_text = document.getElementById("domaine");
     const ss_domaine = document.getElementById("sous_domaine");
     const plateau = document.getElementById("plateau");
+    const url_text = document.getElementById("url");
+    const intitul = document.getElementById("intitul");
 
-    if (!description || !platforme_text || !techno_text || !domaine_text || !ss_domaine || !plateau) {
+    if (!description || !platforme_text || !techno_text || !domaine_text || !ss_domaine || !plateau || !url_text || !intitul) {
       alert("Un ou plusieurs éléments DOM sont introuvables.");
     }
 
     // Trouver la compétence correspondant à l'intitulé recherché
     const competenceTrouvee = competences.find(c => c.ct_intitule_court_fr === query);
-    const technoTrouvee = techno.find(t => t.j_ct_num === competenceTrouvee.ct_num);
-    const domaineTrouvee = domaine.find(d => d.j_ct_num === competenceTrouvee.ct_num);
-    const platformeTrouvee = platforme.find(p => p.j_ct_num === competenceTrouvee.ct_num);
+    const technoTrouvee = techno.filter(t => t.j_ct_num === competenceTrouvee.ct_num);
+    const domainesTrouves = domaine.filter(d => d.j_ct_num === competenceTrouvee.ct_num);
+    const platformeTrouvee = platforme.filter(p => p.j_ct_num === competenceTrouvee.ct_num);
+          
    
     if (!competenceTrouvee) {
           description.value = "Aucune description disponible.";
@@ -218,30 +225,32 @@ async function chargerDescription() {
         {
           description.value = competenceTrouvee.ct_description_fr ;
         }
-    if (!technoTrouvee) {
+    if (technoTrouvee.length==0) {
           techno_text.value = "Aucune techno disponible." ;
         }
     else 
         {
-          techno_text.value = technoTrouvee.j_ct_techno_fr
+          techno_text.value = technoTrouvee.map(d => d.j_ct_techno_fr).join("\n");
         }
-    if (!domaineTrouvee) {
+    if (domainesTrouves.length==0) {
           domaine_text.value = "Aucun domaine disponible." ;
         }
     else 
         {
-          domaine_text.value = domaineTrouvee.j_ct_domaine ;
+          domaine_text.value = domainesTrouves.map(d => d.j_ct_domaine).join("\n");
         }
-    if (!platformeTrouvee) {
+    if (platformeTrouvee.length==0) { 
           platforme_text.value = "Aucune plateforme disponible." ;
         }
     else 
         {
-          platforme_text.value = platformeTrouvee.j_pf_nom ;
+          platforme_text.value = platformeTrouvee.map(d => d.j_pf_nom).join("\n");
         }
 
     ss_domaine.textContent  = competenceTrouvee.ct_ss_domaine ;
     plateau.textContent  = competenceTrouvee.ct_plateau ;
+    url_text.textContent  = competenceTrouvee.ct_url ;
+    intitul.textContent  = competenceTrouvee.ct_intitule_court_fr
 
 
   } catch (error) {
