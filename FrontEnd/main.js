@@ -3,6 +3,7 @@ const API_URL = "http://localhost:8000/api/";
 let technoSelectionnee = "";
 let domaineSelectionne = "";
 let platformeSelectionnee = "";  
+const queryInput = document.getElementById("search-input");
 let num ="";
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -109,14 +110,17 @@ function remplirSelect(id, data, valueKey, textKey, defaultText) {
  * Charge la description de la compétence sélectionnée.
  */
 async function chargerDescription() {
+  
   try {
-    const query = document.getElementById("search-input").value.trim();
+    
+    
+    let query = queryInput.value.trim();
     if (!query && !technoSelectionnee && !domaineSelectionne && !platformeSelectionnee) {
       console.warn("Le champ de recherche est vide.");
       alert("Veuillez entrer un intitulé de compétence.");
       return;
     }
-
+    
     // Récupération des données depuis l'API
     const [technoData, competenceData, domaineData, platformeData] = await Promise.all([
       fetch(API_URL + "J_techno").then(res => res.json()),
@@ -130,11 +134,17 @@ async function chargerDescription() {
 
     let competencesTrouvees = [];
 
-    if (query) {
+    if (query && num.length ==0) {
       const competence = competenceData.find(c => c.ct_intitule_court_fr === query);
       if (competence) competencesTrouvees.push(competence);
-    } else if (num.length > 0) {
+    } 
+    else if (num.length > 0 && !query) {
       competencesTrouvees = competenceData.filter(c => num.includes(c.ct_num));
+    }
+    else if (num.length > 0 && query) {
+      chargerTousLesFiltres();
+      const competence = competenceData.find(c => c.ct_intitule_court_fr === query);
+      if (competence) competencesTrouvees.push(competence);
     }
 
     if (competencesTrouvees.length === 0) {
@@ -237,8 +247,8 @@ async function chargerDescription() {
 
         resultatsContainer.appendChild(detailsElement);
         // Après avoir affiché les résultats, réinitialiser les filtres
-        
-        // chargerTousLesFiltres();
+        queryInput.value = "";
+        //chargerTousLesFiltres();
       });
 
       // Ajout des boutons de pagination
