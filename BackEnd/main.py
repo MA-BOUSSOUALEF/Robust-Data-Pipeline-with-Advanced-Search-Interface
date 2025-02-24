@@ -156,7 +156,7 @@ def get_techno_sans_Doublons():
         return {"error": str(e)}
     finally:
         conn.close()
-
+ 
 #Api de Competence From Table D_Competences_Techniques oui
 @app.get("/api/competence")
 def get_techno():
