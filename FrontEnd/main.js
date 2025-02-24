@@ -1,132 +1,112 @@
 const API_URL = "http://localhost:8000/api/";
- 
-// charger les sous domaines 
-async function chargerSousDomaines() {
+/////////////////////////////////////////////////////////////////////////les filtres avec suggestion ///////////////////////////////////////////////////////////
+let technoSelectionnee = "";
+let domaineSelectionne = "";
+let platformeSelectionnee = "";  
+let num ="";
+
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await chargerTousLesFiltres(); // Charger les données initiales
+
+    // Ajout d'écouteurs pour filtrage dynamique
+    document.getElementById("Techno-list").addEventListener("change", chargerTousLesFiltres);
+    document.getElementById("domaine-list").addEventListener("change", chargerTousLesFiltres);
+    document.getElementById("platforme-list").addEventListener("change", chargerTousLesFiltres);
+});
+  
+/**
+ * Charge toutes les données et applique les filtres si nécessaire.
+ */
+async function chargerTousLesFiltres() {
     try {
-        const response = await fetch(API_URL + "Sous_Domaine");
-        if (!response.ok) throw new Error("Erreur lors de la récupération des domaines");
+        // Récupération des valeurs sélectionnées
+         technoSelectionnee = document.getElementById("Techno-list").value;
+         domaineSelectionne = document.getElementById("domaine-list").value;
+         platformeSelectionnee = document.getElementById("platforme-list").value;
+         
 
-        const domaines = await response.json();
+        // Récupération des données depuis l'API
+        const [platformes, domaines, technos] = await Promise.all([
+            fetch(API_URL + "platforme").then(res => res.json()),
+            fetch(API_URL + "Domaine").then(res => res.json()),
+            fetch(API_URL + "techno").then(res => res.json())
+        ]);
 
-        const select = document.getElementById("ss_domaine-list");
-        if (!select) {
-            console.error("Élément #domaine-list introuvable dans le DOM");
-            return; 
+        // Filtrage intelligent des données
+        let domainesFiltres = domaines;
+        let platformesFiltres = platformes;
+        let technosFiltres = technos;
+
+
+        if (technoSelectionnee) {
+          // tout les num de techno qui ont la techno selectionnée
+          All_num_techno = technos.filter(t => t.j_ct_techno_fr === technoSelectionnee).map(t => t.j_ct_num); 
+          alert(All_num_techno)
+          domainesFiltres = domaines.filter(d => All_num_techno.includes(d.j_ct_num));
+          alert(domainesFiltres)
+          platformesFiltres = platformes.filter(p => All_num_techno.includes(p.j_ct_num));
+          alert(platformesFiltres)
+          num = All_num_techno;
         }
-        // Réinitialiser le contenu
-        select.innerHTML = '<option value="">Sélectionnez un sous domaine</option>';
-        if (!Array.isArray(domaines) || domaines.length === 0) {
-            console.warn("Aucun sous domaine reçu depuis l'API.");
-            return;
+        if (domaineSelectionne) {
+            // tout les num de domaine qui ont le domaine selectionné
+            All_num_domaine = domaines.filter(d => d.j_ct_domaine === domaineSelectionne).map(d => d.j_ct_num);
+            alert(All_num_domaine)
+            technosFiltres = technos.filter(t =>All_num_domaine.includes(t.j_ct_num));
+            alert(technosFiltres)
+            platformesFiltres = platformes.filter(p => All_num_domaine.includes(p.j_ct_num));
+            alert(platformesFiltres)
+            num = All_num_domaine
         }
-        // Ajouter les options en vérifiant les valeurs
-        domaines.forEach(domaine => {
+        if (platformeSelectionnee) {
+            // tout les num de platforme qui ont la platforme selectionnée
+            All_num_platforme = platformes.filter(p => p.j_pf_nom === platformeSelectionnee).map(p => p.j_ct_num);
+            technosFiltres = technos.filter(t => All_num_platforme.includes(t.j_ct_num));
+            domainesFiltres = domaines.filter(d => All_num_platforme.includes(d.j_ct_num));
+            num = All_num_platforme
+        }
 
-            if (!domaine.ct_ss_domaine) {
-                console.warn("Donnée incorrecte détectée :", domaine);
-                return;
-            }
-            const option = document.createElement("option");
-            option.value = domaine.ct_ss_domaine ;
-            option.textContent = domaine.ct_ss_domaine;
-            select.appendChild(option);
-        });
+        // Mise à jour des listes déroulantes
+        remplirSelect("Techno-list", technosFiltres, "j_ct_num", "j_ct_techno_fr", "Sélectionnez une technologie");
+        remplirSelect("domaine-list", domainesFiltres, "j_ct_num", "j_ct_domaine", "Sélectionnez un domaine");
+        remplirSelect("platforme-list", platformesFiltres, "j_ct_num", "j_pf_nom", "Sélectionnez une plateforme");
 
     } catch (error) {
-        console.error("Erreur lors du chargement des domaines :", error);
-        alert("Impossible de charger les domaines !");
+        console.error("Erreur lors du chargement des filtres :", error);
+        alert("Impossible de charger les données !");
+    }
+}
+
+/**
+ * Remplit un `<select>` avec des données.
+ * @param {string} id - ID du select
+ * @param {Array} data - Données à afficher
+ * @param {string} valueKey - Clé pour la valeur de l'option
+ * @param {string} textKey - Clé pour le texte affiché
+ * @param {string} defaultText - Texte par défaut
+ */
+function remplirSelect(id, data, valueKey, textKey, defaultText) {
+    const select = document.getElementById(id);
+    if (!select) return;
+
+    select.innerHTML = `<option value="" disabled selected>${defaultText}</option>`;
+    if (Array.isArray(data) && data.length > 0) {
+        data.forEach(item => {
+            if (item[valueKey] && item[textKey]) {
+                const option = document.createElement("option");
+                option.value = item[textKey];
+                option.textContent = item[textKey];
+                select.appendChild(option);
+            }
+        });
     }
 }
 
 
-//charger les domaines 
-async function chargerDomaines() {
-  try {
-      const response = await fetch(API_URL + "Domaine");
-      if (!response.ok) throw new Error("Erreur lors de la récupération des domaines");
-
-      const domaines = await response.json();
-
-      const select = document.getElementById("domaine-list");
-      if (!select) {
-          console.error("Élément #domaine-list introuvable dans le DOM");
-          return;
-      }
-      // Réinitialiser le contenu
-      select.innerHTML = '<option value="">Sélectionnez un domaine</option>';
-      if (!Array.isArray(domaines) || domaines.length === 0) {
-          console.warn("Aucun domaine reçu depuis l'API.");
-          return;
-      }
-      // Ajouter les options en vérifiant les valeurs
-      domaines.forEach(domaine => {
-
-          if (!domaine.j_ct_domaine) {
-              console.warn("Donnée incorrecte détectée :", domaine);
-              return;
-          }
-          const option = document.createElement("option");
-          option.value = domaine.j_ct_domaine ;
-          option.textContent = domaine.j_ct_domaine;
-          select.appendChild(option);
-      });
-
-  } catch (error) {
-      console.error("Erreur lors du chargement des domaines :", error);
-      alert("Impossible de charger les domaines !");
-  }
-}
-
-//charger les technologies 
-async function chargerTechno() {
-  console.log('techno')
-  try {
-      const response = await fetch(API_URL + "techno");
-      if (!response.ok) throw new Error("Erreur lors de la récupération des Technos");
-
-      const technos = await response.json();
-
-      const select = document.getElementById("Techno-list");
-      if (!select) {
-          console.error("Élément #Techno-list introuvable dans le DOM");
-          return;
-      }
-      // Réinitialiser le contenu
-      select.innerHTML = '<option value="">Sélectionnez une Techno </option>';
-      if (!Array.isArray(technos) || technos.length === 0) {
-          console.warn("Aucun Techno reçu depuis l'API.");
-          return;
-      }
-      // Ajouter les options en vérifiant les valeurs
-      technos.forEach(techno => {
-
-          if (!techno.j_ct_techno_fr) {
-              console.warn("Donnée incorrecte détectée :", techno);
-              return;
-          }
-          const option = document.createElement("option");
-          option.value = techno.j_ct_techno_fr ;
-          option.textContent = techno.j_ct_techno_fr;
-          select.appendChild(option);
-      });
-
-  } catch (error) {
-      console.error("Erreur lors du chargement des technos :", error);
-      alert("Impossible de charger les technos !");
-  }
-}
-
-// Charger les technos au chargement de la page
-document.addEventListener("DOMContentLoaded", chargerTechno);
-// Charger les domaines au chargement de la page
-document.addEventListener("DOMContentLoaded", chargerDomaines);
-// Charger les Sous domaines au chargement de la page
-document.addEventListener("DOMContentLoaded", chargerSousDomaines);
 
 
-
-
-
+//////////////////////////////////////////////////////////suggstions /////////////////////////////////////////////////////////////////////////////////////////////////
 // obtenir les suggestions depuis l'API
 const searchInput = document.getElementById("search-input");
 const suggestionsList = document.getElementById("suggestions-list");
@@ -175,93 +155,405 @@ searchInput.addEventListener("input", () => {
 
 ///////////////////////////////////////////////////////////////////////remplissage des champs//////////////////////////////////////////////
 
-// Charger la description de la compétence
+// // Charger la description de la compétence
+// async function chargerDescription() {
+//   try {
+//     const query = document.getElementById("search-input").value.trim();
+//     if (!query && !technoSelectionnee && !domaineSelectionne && !platformeSelectionnee) {
+//       console.warn("Le champ de recherche est vide.");
+//       alert("Veuillez entrer un intitulé de compétence.");
+//       return;
+//     }
+
+//     // Vérification et récupération des données API
+//     const techo_reponse = await fetch(API_URL + "J_techno");
+//     if (!techo_reponse.ok) throw new Error("Erreur lors de la récupération des technologies");
+
+//     const response = await fetch(API_URL + "competence");
+//     if (!response.ok) throw new Error("Erreur lors de la récupération des compétences");
+
+//     const domaine_response = await fetch(API_URL + "J_domaine");
+//     if (!domaine_response.ok) throw new Error("Erreur lors de la récupération des domaines");
+
+//     const platforme_response = await fetch(API_URL + "platform");
+//     if (!platforme_response.ok) throw new Error("Erreur lors de la récupération des plateformes");
+
+//     // Parsing des réponses JSON
+//     const competences = await response.json();
+//     const techno = await techo_reponse.json();
+//     const domaine = await domaine_response.json();
+//     const platforme = await platforme_response.json();
+
+//     // Vérification des éléments DOM
+//     const description = document.getElementById("description");
+//     const platforme_text = document.getElementById("platform"); 
+//     const techno_text = document.getElementById("techno");
+//     const domaine_text = document.getElementById("domaine");
+//     const ss_domaine = document.getElementById("sous_domaine");
+//     const plateau = document.getElementById("plateau");
+//     const url_text = document.getElementById("url");
+//     const intitul = document.getElementById("intitul");
+//     const intutli_titre = document.getElementById("search-resultats");
+
+//     if (!description || !platforme_text || !techno_text || !domaine_text || !ss_domaine || !plateau || !url_text || !intitul || !intutli_titre) {
+//       alert("Un ou plusieurs éléments DOM sont introuvables.");
+//       return;
+//     }
+
+//     // Trouver la compétence correspondant à l'intitulé recherché
+//     let competenceTrouvee = ""; 
+    
+//     if (query) {
+//       competenceTrouvee = competences.find(c => c.ct_intitule_court_fr === query);
+//     }
+//     else {
+//       competenceTrouvee = competences.find(c => c.ct_num === num);
+//     }
+
+
+
+//     if (!competenceTrouvee) {
+//       description.value = "Aucune description disponible.";
+//       techno_text.value = "Aucune techno disponible.";
+//       domaine_text.value = "Aucun domaine disponible.";
+//       platforme_text.value = "Aucune plateforme disponible.";
+//       return;
+//     }
+
+//     // Filtrage des résultats
+//     const technoTrouvee = techno.filter(t => t.j_ct_num === competenceTrouvee.ct_num);
+//     const domainesTrouves = domaine.filter(d => d.j_ct_num === competenceTrouvee.ct_num);
+//     const platformeTrouvee = platforme.filter(p => p.j_ct_num === competenceTrouvee.ct_num);
+
+//     // Mise à jour du DOM
+//     description.value = competenceTrouvee.ct_description_fr || "Aucune description disponible.";
+//     techno_text.value = technoTrouvee.length ? technoTrouvee.map(d => d.j_ct_techno_fr).join("\n") : "Aucune techno disponible.";
+//     domaine_text.value = domainesTrouves.length ? domainesTrouves.map(d => d.j_ct_domaine).join("\n") : "Aucun domaine disponible.";
+//     platforme_text.value = platformeTrouvee.length ? platformeTrouvee.map(d => d.j_pf_nom).join("\n") : "Aucune plateforme disponible.";
+
+//     ss_domaine.textContent = competenceTrouvee.ct_ss_domaine;
+//     plateau.textContent = competenceTrouvee.ct_plateau;
+//     url_text.textContent = competenceTrouvee.ct_url;
+//     intitul.textContent = competenceTrouvee.ct_intitule_court_fr;
+
+//     let titreCompetence = encodeURIComponent(competenceTrouvee.ct_intitule_court_fr);
+//     intutli_titre.innerHTML = `
+//     ${competenceTrouvee.ct_intitule_court_fr} -- 
+//     <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//       CAGT (Centre d'Anthropobiologie et de Génomique de Toulouse)
+//     </a> -- 
+//     <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//       Voir la fiche CAGT
+//     </a> -- 
+//     <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//       Voir le panorama scientifique CAGT
+//     </a> 
+//   `;
+
+//   } catch (error) {
+//     console.error("Erreur lors du chargement des compétences :", error);
+//     alert("Impossible de charger les compétences !");
+//   }
+// }
+
+// // Charger la description au clic sur le bouton
+// document.getElementById("recherche").addEventListener("click", chargerDescription);
+
+
+// // Charger techno et domaine au clic sur le bouton
+
+
+// async function chargerDescription() {
+//   try {
+//     const query = document.getElementById("search-input").value.trim();
+//     if (!query && !technoSelectionnee && !domaineSelectionne && !platformeSelectionnee) {
+//       console.warn("Le champ de recherche est vide.");
+//       alert("Veuillez entrer un intitulé de compétence.");
+//       return;
+//     }
+
+//     // Récupération des données depuis l'API
+//     const [technoData, competenceData, domaineData, platformeData] = await Promise.all([
+//       fetch(API_URL + "J_techno").then(res => res.json()),
+//       fetch(API_URL + "competence").then(res => res.json()),
+//       fetch(API_URL + "J_domaine").then(res => res.json()),
+//       fetch(API_URL + "platform").then(res => res.json())
+//     ]);
+
+//     const resultatsContainer = document.getElementById("resultats");
+//     resultatsContainer.innerHTML = ""; // Nettoyage du conteneur avant l'ajout des nouveaux résultats
+
+//     let competencesTrouvees = [];
+
+//     if (query) {
+//       const competence = competenceData.find(c => c.ct_intitule_court_fr === query);
+//       if (competence) competencesTrouvees.push(competence);
+//     } else if (num.length > 0) {
+//       competencesTrouvees = competenceData.filter(c => num.includes(c.ct_num));
+//     }
+
+//     if (competencesTrouvees.length === 0) {
+//       resultatsContainer.innerHTML = "<p class='text-red-500 font-bold'>Aucune compétence trouvée.</p>";
+//       return;
+//     }
+
+//     competencesTrouvees.forEach(competence => {
+//       const technoTrouvee = technoData.filter(t => t.j_ct_num === competence.ct_num);
+//       const domainesTrouves = domaineData.filter(d => d.j_ct_num === competence.ct_num);
+//       const platformeTrouvee = platformeData.filter(p => p.j_ct_num === competence.ct_num);
+
+//       const technoText = technoTrouvee.length ? technoTrouvee.map(t => t.j_ct_techno_fr).join("\n") : "Aucune techno disponible.";
+//       const domaineText = domainesTrouves.length ? domainesTrouves.map(d => d.j_ct_domaine).join("\n") : "Aucun domaine disponible.";
+//       const platformeText = platformeTrouvee.length ? platformeTrouvee.map(p => p.j_pf_nom).join("\n") : "Aucune plateforme disponible.";
+
+//       let titreCompetence = encodeURIComponent(competence.ct_intitule_court_fr);
+
+//       const detailsElement = document.createElement("details");
+//       detailsElement.className = "border p-2 w-1/2 rounded-lg shadow-md bg-gray-100";
+//       detailsElement.innerHTML = `
+//         <summary class="cursor-pointer text-blue-600 font-bold text-lg">
+//           ${competence.ct_intitule_court_fr} --
+//           <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//             CAGT
+//           </a> --
+//           <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//             Voir la fiche CAGT
+//           </a> --
+//           <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+//             Voir le panorama scientifique CAGT
+//           </a>
+//         </summary>
+        // <fieldset class="w-full min-h-[420px] p-4 pt-6 border rounded-lg bg-white shadow-md relative">
+        //   <legend class="text-black-500 p-2 rounded font-bold">Fiche Compétence Technique</legend>
+
+        //   <div class="flex items-center gap-2">
+        //     <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">Intitulé court</legend>
+        //     <span class="bg-white p-2 border rounded">${competence.ct_intitule_court_fr}</span>
+        //   </div>
+        //   <br/>
+
+        //   <div class="flex items-center gap-2">
+        //     <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">URL</legend>
+        //     <span class="bg-white p-2 border rounded">${competence.ct_url || "Non disponible"}</span>
+        //   </div>
+        //   <br/>
+
+        //   <legend class="w-full bg-blue-200 text-black p-2 rounded">Description :</legend>
+        //   <textarea class="w-full h-64 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        //     focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-y-auto" readonly>${competence.ct_description_fr || "Aucune description disponible."}</textarea>
+
+        //   <legend class="text-blue-500 p-2 rounded underline font-bold">Rattachement(s) de la compétence technique :</legend>
+        
+        //   <legend class="w-full bg-gray-400 text-black p-2 rounded">Plateforme(s) :</legend>
+        //   <textarea class="w-full h-20 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        //     focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+        //     style="white-space: pre-wrap; word-wrap: break-word;" readonly>${platformeText}</textarea>
+
+        //   <div class="flex items-center gap-2">
+        //     <legend class="w-48 bg-blue-200 text-black p-2 rounded">Plateau :</legend>
+        //     <span class="bg-white p-2 border rounded">${competence.ct_plateau || "Non disponible"}</span>
+        //   </div>
+
+        //   <legend class="text-blue-500 p-2 rounded underline font-bold">Classification de la compétence technique :</legend>
+
+        //   <div class="flex items-center gap-2">
+        //     <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Domaine(s) :</legend>
+        //     <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Technologie(s) :</legend>
+        //   </div>
+
+        //   <div class="flex items-center gap-2">
+        //     <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        //       focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+        //       style="white-space: pre-wrap; word-wrap: break-word;" readonly>${domaineText}</textarea>
+
+        //     <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        //       focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+        //       style="white-space: pre-wrap; word-wrap: break-word;" readonly>${technoText}</textarea>
+        //   </div>
+
+        //   <br/>
+
+        //   <div class="flex items-center gap-2">
+        //     <legend class="w-38 bg-blue-200 text-black p-2 rounded">Sous-domaine :</legend>
+        //     <span class="bg-white p-2 border rounded">${competence.ct_ss_domaine || "Non disponible"}</span>
+        //   </div>
+        // </fieldset>
+//       `;
+
+//       resultatsContainer.appendChild(detailsElement);
+//     });
+
+//   } catch (error) {
+//     console.error("Erreur lors du chargement des compétences :", error);
+//     alert("Impossible de charger les compétences !");
+//   }
+// }
 async function chargerDescription() {
   try {
     const query = document.getElementById("search-input").value.trim();
-    if (!query) {
+    if (!query && !technoSelectionnee && !domaineSelectionne && !platformeSelectionnee) {
       console.warn("Le champ de recherche est vide.");
+      alert("Veuillez entrer un intitulé de compétence.");
       return;
     }
-    console.log(query);
-    const techo_reponse = await fetch(API_URL + "J_techno");
-    const response = await fetch(API_URL + "competence");
-    const domaine_response = await fetch(API_URL + "J_domaine");
-    const platforme_response = await fetch(API_URL + "platform");
-    if (!response.ok) throw new Error("Erreur lors de la récupération des compétences");
-     
-    const competences = await response.json();
-    const techno = await techo_reponse.json();
-    const domaine = await domaine_response.json();
-    const platforme = await platforme_response.json();
-      
 
+    // Récupération des données depuis l'API
+    const [technoData, competenceData, domaineData, platformeData] = await Promise.all([
+      fetch(API_URL + "J_techno").then(res => res.json()),
+      fetch(API_URL + "competence").then(res => res.json()),
+      fetch(API_URL + "J_domaine").then(res => res.json()),
+      fetch(API_URL + "platform").then(res => res.json())
+    ]);
 
-    const description = document.getElementById("description");
-    const platforme_text = document.getElementById("platform"); 
-    const techno_text = document.getElementById("techno");
-    const domaine_text = document.getElementById("domaine");
-    const ss_domaine = document.getElementById("sous_domaine");
-    const plateau = document.getElementById("plateau");
-    const url_text = document.getElementById("url");
-    const intitul = document.getElementById("intitul");
+    const resultatsContainer = document.getElementById("resultats");
+    resultatsContainer.innerHTML = ""; // Nettoyage du conteneur avant l'ajout des nouveaux résultats
 
-    if (!description || !platforme_text || !techno_text || !domaine_text || !ss_domaine || !plateau || !url_text || !intitul) {
-      alert("Un ou plusieurs éléments DOM sont introuvables.");
+    let competencesTrouvees = [];
+
+    if (query) {
+      const competence = competenceData.find(c => c.ct_intitule_court_fr === query);
+      if (competence) competencesTrouvees.push(competence);
+    } else if (num.length > 0) {
+      competencesTrouvees = competenceData.filter(c => num.includes(c.ct_num));
     }
 
-    // Trouver la compétence correspondant à l'intitulé recherché
-    const competenceTrouvee = competences.find(c => c.ct_intitule_court_fr === query);
-    const technoTrouvee = techno.filter(t => t.j_ct_num === competenceTrouvee.ct_num);
-    const domainesTrouves = domaine.filter(d => d.j_ct_num === competenceTrouvee.ct_num);
-    const platformeTrouvee = platforme.filter(p => p.j_ct_num === competenceTrouvee.ct_num);
-          
-   
-    if (!competenceTrouvee) {
-          description.value = "Aucune description disponible.";
-      
-        }
-    else 
-        {
-          description.value = competenceTrouvee.ct_description_fr ;
-        }
-    if (technoTrouvee.length==0) {
-          techno_text.value = "Aucune techno disponible." ;
-        }
-    else 
-        {
-          techno_text.value = technoTrouvee.map(d => d.j_ct_techno_fr).join("\n");
-        }
-    if (domainesTrouves.length==0) {
-          domaine_text.value = "Aucun domaine disponible." ;
-        }
-    else 
-        {
-          domaine_text.value = domainesTrouves.map(d => d.j_ct_domaine).join("\n");
-        }
-    if (platformeTrouvee.length==0) { 
-          platforme_text.value = "Aucune plateforme disponible." ;
-        }
-    else 
-        {
-          platforme_text.value = platformeTrouvee.map(d => d.j_pf_nom).join("\n");
-        }
+    if (competencesTrouvees.length === 0) {
+      resultatsContainer.innerHTML = "<p class='text-red-500 font-bold'>Aucune compétence trouvée.</p>";
+      return;
+    }
 
-    ss_domaine.textContent  = competenceTrouvee.ct_ss_domaine ;
-    plateau.textContent  = competenceTrouvee.ct_plateau ;
-    url_text.textContent  = competenceTrouvee.ct_url ;
-    intitul.textContent  = competenceTrouvee.ct_intitule_court_fr
+    let page = 0;
+    const itemsPerPage = 4;
 
+    function afficherPage() {
+      resultatsContainer.innerHTML = "";
+      const debut = page * itemsPerPage;
+      const fin = debut + itemsPerPage;
+      const competencesAffichees = competencesTrouvees.slice(debut, fin);
+
+      competencesAffichees.forEach(competence => {
+        const technoTrouvee = technoData.filter(t => t.j_ct_num === competence.ct_num);
+        const domainesTrouves = domaineData.filter(d => d.j_ct_num === competence.ct_num);
+        const platformeTrouvee = platformeData.filter(p => p.j_ct_num === competence.ct_num);
+
+        const technoText = technoTrouvee.length ? technoTrouvee.map(t => t.j_ct_techno_fr).join("\n") : "Aucune techno disponible.";
+        const domaineText = domainesTrouves.length ? domainesTrouves.map(d => d.j_ct_domaine).join("\n") : "Aucun domaine disponible.";
+        const platformeText = platformeTrouvee.length ? platformeTrouvee.map(p => p.j_pf_nom).join("\n") : "Aucune plateforme disponible.";
+
+        let titreCompetence = encodeURIComponent(competence.ct_intitule_court_fr);
+
+        const detailsElement = document.createElement("details");
+        detailsElement.className = "border p-2 w-1/2 rounded-lg shadow-md bg-gray-100";
+        detailsElement.innerHTML = ` <br> <br>
+          <summary class="cursor-pointer text-blue-600 font-bold text-lg">
+            ${competence.ct_intitule_court_fr} --
+            <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+              CAGT
+            </a> --
+            <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+              Voir la fiche CAGT
+            </a> --
+            <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
+              Voir le panorama scientifique CAGT
+            </a>
+          </summary>
+                <fieldset class="w-full min-h-[420px] p-4 pt-6 border rounded-lg bg-white shadow-md relative">
+          <legend class="text-black-500 p-2 rounded font-bold">Fiche Compétence Technique</legend>
+
+          <div class="flex items-center gap-2">
+            <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">Intitulé court</legend>
+            <span class="bg-white p-2 border rounded">${competence.ct_intitule_court_fr}</span>
+          </div>
+          <br/>
+
+          <div class="flex items-center gap-2">
+            <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">URL</legend>
+            <span class="bg-white p-2 border rounded">${competence.ct_url || "Non disponible"}</span>
+          </div>
+          <br/>
+
+          <legend class="w-full bg-blue-200 text-black p-2 rounded">Description :</legend>
+          <textarea class="w-full h-64 p-2 border rounded-lg bg-gray-200 text-gray-700 
+            focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-y-auto" readonly>${competence.ct_description_fr || "Aucune description disponible."}</textarea>
+
+          <legend class="text-blue-500 p-2 rounded underline font-bold">Rattachement(s) de la compétence technique :</legend>
+        
+          <legend class="w-full bg-gray-400 text-black p-2 rounded">Plateforme(s) :</legend>
+          <textarea class="w-full h-20 p-2 border rounded-lg bg-gray-200 text-gray-700 
+            focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+            style="white-space: pre-wrap; word-wrap: break-word;" readonly>${platformeText}</textarea>
+
+          <div class="flex items-center gap-2">
+            <legend class="w-48 bg-blue-200 text-black p-2 rounded">Plateau :</legend>
+            <span class="bg-white p-2 border rounded">${competence.ct_plateau || "Non disponible"}</span>
+          </div>
+
+          <legend class="text-blue-500 p-2 rounded underline font-bold">Classification de la compétence technique :</legend>
+
+          <div class="flex items-center gap-2">
+            <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Domaine(s) :</legend>
+            <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Technologie(s) :</legend>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+              focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+              style="white-space: pre-wrap; word-wrap: break-word;" readonly>${domaineText}</textarea>
+
+            <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+              focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+              style="white-space: pre-wrap; word-wrap: break-word;" readonly>${technoText}</textarea>
+          </div>
+
+          <br/>
+
+          <div class="flex items-center gap-2">
+            <legend class="w-38 bg-blue-200 text-black p-2 rounded">Sous-domaine :</legend>
+            <span class="bg-white p-2 border rounded">${competence.ct_ss_domaine || "Non disponible"}</span>
+          </div>
+        </fieldset>
+        
+        `;
+
+        resultatsContainer.appendChild(detailsElement);
+      });
+
+      // Ajout des boutons de pagination
+      const paginationContainer = document.createElement("div");
+      paginationContainer.className = "flex justify-center gap-4 mt-4";
+
+      if (page > 0) {
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "Précédent";
+        prevButton.className = "px-4 py-2 bg-blue-500 text-white rounded-lg";
+        prevButton.onclick = () => {
+          page--;
+          afficherPage();
+        };
+        paginationContainer.appendChild(prevButton);
+      }
+
+      if (fin < competencesTrouvees.length) {
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Suivant";
+        nextButton.className = "px-4 py-2 bg-blue-500 text-white rounded-lg";
+        nextButton.onclick = () => {
+          page++;
+          afficherPage();
+        };
+        paginationContainer.appendChild(nextButton);
+      }
+
+      resultatsContainer.appendChild(paginationContainer);
+    }
+
+    afficherPage();
 
   } catch (error) {
-    console.error("Erreur lors du chargement des competences :", error);
-    alert("Impossible de charger les competences !");
+    console.error("Erreur lors du chargement des compétences :", error);
+    alert("Impossible de charger les compétences !");
   }
 }
+
 // Charger la description au clic sur le bouton
 document.getElementById("recherche").addEventListener("click", chargerDescription);
-
-
-// Charger techno et domaine au clic sur le bouton
-
-
