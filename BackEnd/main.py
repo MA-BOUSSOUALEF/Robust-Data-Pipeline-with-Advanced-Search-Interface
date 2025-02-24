@@ -50,6 +50,23 @@ def get_Ct_ss_Domaine():
         return {"error": str(e)}
     finally:
         conn.close()  
+        
+@app.get("/api/platforme_sans_Doublons")
+def get_Ct_ss_Domaine_sans_Doublons():
+    conn = get_db_connection()
+    if not conn:
+        return {"error": "Impossible de se connecter à la base de données"}
+    try:
+        table ="cartorecherche_ut3_projet_etudiant_db."
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT  DISTINCT j_pf_nom FROM {table}j_ct_plateforme WHERE  j_pf_nom NOT ILIKE 'NaN'")
+        domaine = cursor.fetchall() 
+        return domaine
+    except Exception as e:
+        print(f"Erreur lors de la récupération des données : {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()
  
  # Api de Plateau From D_Competences_Technique non
 @app.get("/api/Plateau")
@@ -88,6 +105,22 @@ def get_Domaine():
     finally:
         conn.close() 
         
+@app.get("/api/Domaine_sans_Doublons")
+def get_Domaine_sans_Doublons():
+    conn = get_db_connection()
+    if not conn:
+        return {"error": "Impossible de se connecter à la base de données"}
+    try:
+        table ="cartorecherche_ut3_projet_etudiant_db."
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT  DISTINCT j_ct_domaine  FROM {table}j_ct_domaine WHERE j_ct_domaine NOT ILIKE 'NaN'")  
+        domaine = cursor.fetchall() 
+        return domaine
+    except Exception as e:
+        print(f"Erreur lors de la récupération des données : {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()       
         
 # Api de techno From Table J_Ct_Techno oui
 @app.get("/api/techno")
@@ -99,6 +132,23 @@ def get_techno():
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
         cursor.execute(f"SELECT  j_ct_techno_fr ,j_ct_num FROM {table}j_ct_techno")  
+        techno = cursor.fetchall() 
+        return techno
+    except Exception as e:
+        print(f"Erreur lors de la récupération des données : {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()
+        
+@app.get("/api/techno_sans_Doublons")
+def get_techno_sans_Doublons():
+    conn = get_db_connection()
+    if not conn:
+        return {"error": "Impossible de se connecter à la base de données"}
+    try:
+        table ="cartorecherche_ut3_projet_etudiant_db."
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT  DISTINCT j_ct_techno_fr FROM {table}j_ct_techno")  
         techno = cursor.fetchall() 
         return techno
     except Exception as e:
