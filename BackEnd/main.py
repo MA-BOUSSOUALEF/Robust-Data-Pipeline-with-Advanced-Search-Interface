@@ -34,7 +34,7 @@ def get_db_connection():
 
 
 # Api de Sous Domaine From D_Competences_Technique oui
-@app.get("/api/Sous_Domaine")
+@app.get("/api/platforme")
 def get_Ct_ss_Domaine():
     conn = get_db_connection()
     if not conn:
@@ -42,7 +42,7 @@ def get_Ct_ss_Domaine():
     try:
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
-        cursor.execute(f"SELECT DISTINCT ct_ss_domaine FROM {table}d_competences_techniques WHERE  ct_ss_domaine NOT ILIKE 'NaN'")
+        cursor.execute(f"SELECT  j_pf_nom,j_ct_num FROM {table}j_ct_plateforme WHERE  j_pf_nom NOT ILIKE 'NaN'")
         domaine = cursor.fetchall() 
         return domaine
     except Exception as e:
@@ -60,7 +60,7 @@ def get_Plateau():
     try:
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
-        cursor.execute(f"SELECT DISTINCT ct_plateau FROM {table}d_competences_techniques WHERE  ct_plateau NOT ILIKE 'NaN'")
+        cursor.execute(f"SELECT DISTINCT ct_plateau  FROM {table}d_competences_techniques WHERE  ct_plateau NOT ILIKE 'NaN'")
         plateau = cursor.fetchall() 
         return plateau
     except Exception as e:
@@ -79,7 +79,7 @@ def get_Domaine():
     try:
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
-        cursor.execute(f"SELECT DISTINCT j_ct_domaine FROM {table}j_ct_domaine WHERE j_ct_domaine NOT ILIKE 'NaN'")  
+        cursor.execute(f"SELECT  j_ct_domaine ,j_ct_num FROM {table}j_ct_domaine WHERE j_ct_domaine NOT ILIKE 'NaN'")  
         domaine = cursor.fetchall() 
         return domaine
     except Exception as e:
@@ -98,7 +98,7 @@ def get_techno():
     try:
         table ="cartorecherche_ut3_projet_etudiant_db."
         cursor = conn.cursor()
-        cursor.execute(f"SELECT DISTINCT j_ct_techno_fr FROM {table}j_ct_techno")  
+        cursor.execute(f"SELECT  j_ct_techno_fr ,j_ct_num FROM {table}j_ct_techno")  
         techno = cursor.fetchall() 
         return techno
     except Exception as e:
