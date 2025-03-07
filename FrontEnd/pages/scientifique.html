@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CartoRecherche UT3</title>
   <!-- Lien vers le CSS compilé (output.css) -->
-  <link rel="stylesheet" href="output.css">
+  <link rel="stylesheet" href="../output.css">
   <!-- Inclusion de Font Awesome pour les icônes (si nécessaire) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -18,16 +18,14 @@
     <div class="container mx-auto px-10 py-3 flex justify-between items-center">
       <!-- Groupe pour le logo et le titre -->
       <div class="flex items-center float-start">
-        <img src="images/logo.png" alt="Icône Science" class="w-16 mr-5">
+        <img src="../images/logo.png" alt="Icône Science" class="w-16 mr-5">
       </div>
-      
-      
 
       <!-- Navigation à droite -->
       <nav class="flex-1 text-center items-center p-5">
         <ul class="flex-row text-justify items-center justify-center ">
-          <li><a href="index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
-          <li><a href="pages/about.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
+          <li><a href="../index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
+          <li><a href="about.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
           <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Recherche</a></li>
           <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Contact</a></li>
         </ul>
@@ -58,66 +56,19 @@
   </header>
   
   <!-- Contenu Principal -->
-  <main class="container mx-auto px-4 mt-10 text-center">
-    <h2 class="text-3xl font-bold text-gray-800">Cartographie des activités de la recherche à l'université de Toulouse</h2>
-    <p class="text-gray-600 mt-2 text-xl">
-      Découvrez les unités de recherche et explorez leurs compétences scientifiques.
-    </p>
-    <div class="flex md:flex-row justify-center items-center gap-6 mt-10 py-4 max-w-7xl mx-auto border-y-2 border-black">
-      <h1 class="text-3xl font-bold  hover:text-ut3 hover:text-4xl transition-all duration-300">Universite Toulouse Paul Sabatier</h1>
-    </div>
 
-    <!-- Section des accès rapides -->
-    <div class="flex md:flex-row justify-center items-center gap-6 mt-10 px-4 max-w-7xl mx-auto">
-      <!-- Carte 1 -->
-      <div class="flex-col items-center bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition w-full md:w-1/2 text-center mb-5 md:mb-0">
-        <div class="pano">
-        <img src="images/panorama.png" alt="Icône Science" class="w-16 h-16 mb-8">
-        </div>
-        <p class="text-xl font-sans text-gray-800 mb-8 mt-8 ml-5 mr-5">
-          La cartographie des activités de recherche offre une vue d'ensemble des unités de recherche et de leurs compétences scientifiques. Explorez les différentes expertises disponibles et découvrez les opportunités de collaboration au sein de notre institution.
-        </p>
-        <button class="bg-ut3 text-white font-bold py-2 px-4 rounded border border-yellows-700 hover:bg-yellow-300 transition inline-block p-8 ">
-          <a href="pages/unite.html" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">Les unités de recherche de l'université.</a>
-        </button>
-      </div>
-
-      <!-- Carte 2 -->
-      <div class="flex-col items-center bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition w-full md:w-1/2 text-center mb-5 md:mb-0">
-        <div class="pano">
-        <img src="images/panorama.png" alt="Icône Technique" class="content-center">
-        </div>
-        <p class="text-xl font-sans text-gray-800 mb-8 mt-8 ml-5 mr-5">
-          La recherche d'une compétence technique est un impératif stratégique. Cette démarche permet d'identifier et d'adopter des outils innovants qui optimisent la performance et favorisent l'innovation au sein des unités de recherche.
-        </p>
-        <button class="bg-ut3 text-white font-bold py-2 px-4 rounded border border-yellows-700 hover:bg-yellow-300 transition inline-block p-8 ">
-          <a href="pages/panorama.html" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">Explorez les compétences techniques des laboratoires.</a>
-        </button>
-      </div>
-    </div>
-
-    <!-- Zone de recherche -->
-    <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
-      <div class="w-full md:w-1/3">
-        <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded border border-white hover:bg-gray-400 transition inline-block p-8">
-          <a href="pages/scientifique.html" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">Rechercher une compétence scientifique</a>
-        </button>
-      </div>
-      <div class="w-full md:w-1/3">
-        <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded border border-white hover:bg-gray-400 transition inline-block p-8">
-          <a href="pages/technique.html" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">Rechercher une compétence technique</a>
-        </button>
-      </div>
-    </div>
-    <br>
-  </main>
-
+    <div class="container mx-auto px-10 py-3">
+        <h2 class="text-3xl font-semibold text-gray-800">Page Scientifique</h2>
+        <p class="text-lg text-gray-600">Bienvenue sur la page scientifique de l'Université Toulouse III - Paul Sabatier.</p>
+        <p class="text-lg text-gray-600">Vous trouverez ici des informations sur les domaines de recherche de l'université, les laboratoires, les équipes de recherche, les projets en cours, etc.</p>
+        <p class="text-lg text-gray-600">N'hésitez pas à nous contacter pour plus d'informations.</p>
+  
   <!-- Footer -->
   <footer>
     <div class="footer-container">
       <!-- Colonne 1 -->
       <div class="col-1" m-5>
-        <img src="images/logo.png" alt="Logo UT3">
+        <img src="../images/logo.png" alt="Logo UT3">
         <div>
           <strong> Université Toulouse III - Paul Sabatier </strong> <p>118 route de Narbonne 31062 TOULOUSE CEDEX 9 </p> Téléphone +33 (0)5 61 55 66 11
         </div>
