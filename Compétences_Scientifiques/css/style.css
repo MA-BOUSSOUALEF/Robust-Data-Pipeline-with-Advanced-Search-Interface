@@ -1,0 +1,52 @@
+.filter-btn {
+    border: 1px solid #004A98;
+    padding: 8px 16px;
+    font-weight: 600;
+    color: #004A98;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .filter-btn:hover {
+    background: #004A98;
+    color: white;
+  }
+
+  .autocomplete {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .autocomplete div {
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .autocomplete div:hover {
+    background-color: #B3D4FC;
+  }
+
+  .loading {
+    display: none;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Simple chevron styles */
+  .chevron {
+    display: inline-block;
+    transition: transform 0.3s;
+    cursor: pointer;
+    margin-right: 4px;
+  }
+
+  .chevron.open {
+    transform: rotate(90deg);
+  }
