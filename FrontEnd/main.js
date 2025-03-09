@@ -176,7 +176,7 @@ async function chargerDescription() {
         detailsElement.className = "border p-2 w-1/2 rounded-lg shadow-md bg-gray-100";
         detailsElement.innerHTML = ` <br> <br>
           <summary class="cursor-pointer text-blue-600 font-bold text-lg">
-            ${competence.ct_intitule_court_fr} --
+          <a href="${competence.ct_url }" target="_blank" class="text-blue-600 underline">   ${competence.ct_intitule_court_fr}</a> --
             <a href="panorama.html?titre=${titreCompetence}" target="_blank" class="text-blue-600 underline">
               CAGT
             </a> --
@@ -269,7 +269,7 @@ async function chargerDescription() {
       if (fin < competencesTrouvees.length) {
         const nextButton = document.createElement("button");
         nextButton.textContent = "Suivant";
-        nextButton.className = "px-4 py-2 bg-orange-500 text-white rounded-lg";
+        nextButton.className = "px-4 py-2 bg-[#fbca00]  text-white rounded-lg";
         nextButton.onclick = () => {
           page++;
           afficherPage();
