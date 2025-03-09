@@ -1,0 +1,26 @@
+#chart {
+    width: 100%;
+    overflow: visible;
+  }
+
+  #chart svg {
+    background-color: #fff;
+  }
+
+  .tooltip {
+    position: absolute;
+    background: rgba(55, 65, 81, 0.9);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 12px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  #chart {
+    max-height: 1000px;
+    overflow-y: auto;
+  }
