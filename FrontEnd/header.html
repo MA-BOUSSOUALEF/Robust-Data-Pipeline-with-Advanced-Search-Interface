@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CartoRecherche UT3</title>
 
-  <!-- Lien vers le CSS compilé (output.css) -->
-  <link rel="stylesheet" href="output.css">
-
-  <!-- Inclusion de Font Awesome pour les icônes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
 <header class="shadow-md bg-black">
     <h1 class="text-2xl font-semibold text-white px-14 pt-3">CartoRecherche UT3</h1>
     <div class="container mx-auto px-10 py-3 flex justify-between items-center">
@@ -19,8 +6,6 @@
       <div class="flex items-center float-start">
         <img src="images/logo.png" alt="Icône Science" class="w-16 mr-5">
       </div>
-      
-      
 
       <!-- Navigation à droite -->
       <nav class="flex-1 text-center items-center p-5">
@@ -31,17 +16,7 @@
           <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Contact</a></li>
         </ul>
         <div x-data="{ open: false }" class="relative">
-          <!-- Bouton principal -->
-          <button @click="open = !open" class="flex items-end float-right text-white text-lg font-bold">
-              <i class="fa-solid fa-language text-3xl hover:text-ut3 p-4"></i>
-          </button>
-      
-          <!-- Menu déroulant -->
-          <div x-show="open" @click.away="open = false"
-              class="absolute right-0 mt-14 w-32 bg-zinc-700 text-white rounded shadow-lg">
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">EN</a>
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">FR</a>
-          </div>
+
       </div>
       
       <!-- Ajoute Alpine.js si ce n'est pas encore fait -->

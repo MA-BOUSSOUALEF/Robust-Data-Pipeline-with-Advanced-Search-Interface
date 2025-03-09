@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 0;
+}
+
+
+.flex {
+  display: flex
+;
+  justify-content: space-between;
+}
+
+h1 {
+  color: #333;
+}
+.domaine-list{
+  appearance: auto !important;
+  display: block !important;
+  width: 200px;
+  height: 200px;
+  background: rgb(246, 245, 245) !important;
+  color: rgb(13, 13, 13) !important;
+}
+
+option {
+  background: white !important;
+  color: black !important;
+}
+
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
