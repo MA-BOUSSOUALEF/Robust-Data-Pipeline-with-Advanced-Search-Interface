@@ -299,9 +299,12 @@ const suggestionsList = document.getElementById("suggestions-list");
 async function fetchSuggestions(query) {
   try {
     const response = await fetch(`http://localhost:8000/api/suggestions?query=${query}`);
+
     if (!response.ok) throw new Error("Erreur lors de la récupération des suggestions");
 
     const suggestions = await response.json();
+    console.log(suggestions);
+
     displaySuggestions(suggestions);  // Afficher les suggestions
   } catch (error) {
     console.error("Erreur :", error);
