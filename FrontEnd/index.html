@@ -140,5 +140,29 @@
   </section>
 </main>
 
+  
+  <!-- <div id="footer-placeholder"></div>
+
+  <script>
+    // Fonction pour inclure le header et le footer
+    function includeHTML() {
+      const includeElements = document.querySelectorAll('[data-include]');
+      includeElements.forEach(el => {
+        const file = el.getAttribute('data-include');
+        fetch(file)
+          .then(response => response.text())
+          .then(data => {
+            el.innerHTML = data;
+          });
+      });
+    }
+
+    // Inclure le header et le footer
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('header-placeholder').setAttribute('data-include', 'header.html');
+      document.getElementById('footer-placeholder').setAttribute('data-include', 'footer.html');
+      includeHTML();
+    });
+  </script>-->
 </body>
 </html>
