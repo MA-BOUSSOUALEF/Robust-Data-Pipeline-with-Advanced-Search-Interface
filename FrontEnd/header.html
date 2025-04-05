@@ -1,22 +1,28 @@
 
 <header class="shadow-md bg-black">
-    <h1 class="text-2xl font-semibold text-white px-14 pt-3">CartoRecherche UT3</h1>
     <div class="container mx-auto px-10 py-3 flex justify-between items-center">
       <!-- Groupe pour le logo et le titre -->
       <div class="flex items-center float-start">
-        <img src="images/logo.png" alt="Icône Science" class="w-16 mr-5">
+        <img src="/Robust-Data-Pipeline-with-Advanced-Search-Interface/FrontEnd/images/logo.png" alt="Icône Science" class="w-16 mr-5">
       </div>
 
       <!-- Navigation à droite -->
       <nav class="flex-1 text-center items-center p-5">
         <ul class="flex-row text-justify items-center justify-center ">
-          <li><a href="index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
-          <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
-          <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Recherche</a></li>
-          <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Contact</a></li>
+          <li><a href="/Robust-Data-Pipeline-with-Advanced-Search-Interface/FrontEnd/index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
+          <li><a href="/Robust-Data-Pipeline-with-Advanced-Search-Interface/FrontEnd/pages/about.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
+          <li><a href="/Robust-Data-Pipeline-with-Advanced-Search-Interface/FrontEnd/pages/aide.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Aide</a></li>
+
+        
         </ul>
         <div x-data="{ open: false }" class="relative">
-
+          <!-- Bouton principal -->
+          <button @click="open = !open" class="flex items-end float-right text-white text-lg font-bold">
+              <i class="fa-solid fa-language text-3xl hover:text-ut3 p-4"></i>
+          </button>
+      
+          <!-- Menu déroulant -->
+        
       </div>
       
       <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
@@ -25,6 +31,7 @@
         <button class="flex items-end float-right text-black bg-ut3">
           <i class="fa-solid fa-magnifying-glass  text-3xl hover:text-ut3 hover:bg-black p-4"  title="cliquer pour chercher par compétence"></i>
         </button>
+        
         </div>
 
       </nav>

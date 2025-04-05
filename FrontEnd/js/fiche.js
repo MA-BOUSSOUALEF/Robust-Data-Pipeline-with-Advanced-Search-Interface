@@ -105,6 +105,7 @@ async function loadStructure() {
       "<p class='text-center text-red-500'>Paramètre 'code' manquant dans l'URL.</p>";
     return;
   }
+
   const detailsUrl = `http://127.0.0.1:8000/details/?code=${struct_num}`;
   const tutellesUrl = `http://127.0.0.1:8000/tutelles/?code=${struct_num}`;
   const federationsUrl = `http://127.0.0.1:8000/federations/?code=${struct_num}`;
@@ -138,7 +139,7 @@ async function loadStructure() {
     }
     const address = await getAddress(d.struct_latitude, d.struct_longitude);
     let html = `
-      <div class="pb-2 border-b-4 border-blue-700 mb-4">
+      <div class="pb-2 border-b-4  border-blue-700 mb-4">
         <h1 class="text-2xl font-bold text-gray-800">Fiche structure - ${d.struct_acronyme}</h1>
         <p class="text-xl text-blue-700 font-semibold">
           ${d.struct_acronyme}
@@ -150,7 +151,7 @@ async function loadStructure() {
           ${d.struct_nom_en || "None"}
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 ">
         <div class="space-y-1">
           <p><span class="font-semibold text-gray-700">Labellisation :</span> <span class="text-gray-800">${d.struct_labellisation || ""}</span></p>
           <p><span class="font-semibold text-gray-700">Identifiant RNSR :</span> <span class="text-gray-800">${d.struct_id_rnsr || ""}</span></p>
@@ -248,6 +249,7 @@ async function loadStructure() {
     document.getElementById("structure-wrap").innerHTML = html;
     var sciences_html = '';
     var fetchPromises = [];
+    var sous_structure_name="";
     sousStructuresData.data.forEach(element => {
       let fetchPromise = fetch(`http://127.0.0.1:8000/keywords/?ss_struct_num=${element.ss_struct_num}`)
         .then(res => res.json())
@@ -255,8 +257,9 @@ async function loadStructure() {
           let keywords = data.data.map(keyword => `
             <li>${keyword.cs_mot_cle_fr}</li>
           `).join('');
+          sousStructure_name =d.struct_acronyme;
           sciences_html += `
-            <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 fiche-spacing fiche-section">
+            <div class="max-w-8xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6 fiche-spacing fiche-section">
               <div class="border-b-4 border-blue-700 pb-2">
                 <h1 class="text-2xl font-bold text-gray-900">Fiche compétences scientifiques</h1>
                 <p class="text-blue-700 font-semibold">${d.struct_acronyme} <span class="text-gray-600"> | Sous-structuration: ${d.struct_sous_structuration}</span></p>
@@ -291,6 +294,121 @@ async function loadStructure() {
     Promise.all(fetchPromises).then(() => {
       document.getElementById("sciences-wrap").innerHTML = sciences_html;
     });
+
+    const API_URL = "http://localhost:8000/api/";
+    const [technoData, competenceData, domaineData, platformeData] = await Promise.all([
+      fetch(API_URL + "J_techno").then(res => res.json()),
+      fetch(API_URL + "competence").then(res => res.json()),
+      fetch(API_URL + "J_domaine").then(res => res.json()),
+      fetch(API_URL + "platform").then(res => res.json())
+    ]);
+    const competencesAffichees = await fetch(`http://localhost:8000/api/cmpetence_structure?structure_num=${struct_num}`).then(res => res.json());
+    var competenceHtml = '';
+    competencesAffichees.forEach(async competence => {
+  
+      const technoTrouvee = technoData.filter(t => t.j_ct_num === competence.ct_num);
+      const domainesTrouves = domaineData.filter(d => d.j_ct_num === competence.ct_num);
+      const platformeTrouvee = platformeData.filter(p => p.j_ct_num === competence.ct_num);
+      console.log("techno"+technoTrouvee);
+      console.log("domaine"+domainesTrouves);
+      console.log("platforme"+platformeTrouvee);
+  
+      const technoText = technoTrouvee.length ? technoTrouvee.map(t => t.j_ct_techno_fr).join("\n") : "Aucune techno disponible.";
+      const domaineText = domainesTrouves.length ? domainesTrouves.map(d => d.j_ct_domaine).join("\n") : "Aucun domaine disponible.";
+      const platformeText = platformeTrouvee.length ? platformeTrouvee.map(p => p.j_pf_nom).join("\n") : "Aucune plateforme disponible.";
+  
+      competenceHtml += ` 
+      <br>
+      </br>
+      <div class="max-w-8xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6 fiche-spacing fiche-section">
+     
+    <div class="pb-2 border-b-4 border-blue-700 mb-4">
+    <h1 class="text-2xl font-bold text-gray-900">Fiche compétences Techniques :  ${sousStructure_name}</h1>
+    <summary class="cursor-pointer text-blue-600 font-bold text-lg">
+      <a href="${competence.ct_url.replace("#", '').replace("#", '')}" target="_blank" class="text-blue-600 underline">
+        ${competence.ct_intitule_court_fr}</a> --
+    </summary>
+  </div>
+  
+  <fieldset class="w-full min-h-[420px] p-4 pt-6 border rounded-lg bg-white shadow-md relative">
+    <legend class="text-black-500 p-2 rounded font-bold">Fiche Compétence Technique</legend>
+  
+    <!-- Intitulé court -->
+    <div class="flex items-center gap-2">
+      <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">Intitulé court</legend>
+      <span class="bg-white p-2 border rounded">${competence.ct_intitule_court_fr}</span>
+    </div>
+  
+    <!-- URL -->
+    <div class="flex items-center gap-2 mt-4">
+      <legend class="w-48 bg-blue-200 text-black p-2 rounded font-bold">URL</legend>
+      <span class="bg-white p-2 border rounded">${competence.ct_url.replace("#", '').replace("#", '') || "Non disponible"}</span>
+    </div>
+  
+    <!-- Description -->
+    <legend class="w-full bg-blue-200 text-black p-2 rounded mt-4">Description :</legend>
+    <textarea class="w-full h-64 p-2 border rounded-lg bg-gray-200 text-gray-700 
+      focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-y-auto" readonly>${competence.ct_description_fr || "Aucune description disponible."}</textarea>
+  
+    <!-- Plateforme(s) -->
+    <legend class="text-blue-500 p-2 rounded underline font-bold mt-4">Rattachement(s) de la compétence technique :</legend>
+    <legend class="w-full bg-gray-400 text-black p-2 rounded">Plateforme(s) :</legend>
+    <textarea class="w-full h-20 p-2 border rounded-lg bg-gray-200 text-gray-700 
+      focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+      style="white-space: pre-wrap; word-wrap: break-word;" readonly>${platformeText}</textarea>
+  
+    <!-- Plateau -->
+    <div class="flex items-center gap-2 mt-4">
+      <legend class="w-48 bg-blue-200 text-black p-2 rounded">Plateau :</legend>
+      <span class="bg-white p-2 border rounded">${competence.ct_plateau || "Non disponible"}</span>
+    </div>
+  
+    <!-- Domaine(s) et Technologie(s) -->
+    <legend class="text-blue-500 p-2 rounded underline font-bold mt-4">Classification de la compétence technique :</legend>
+    <div class="flex items-center gap-2">
+      <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Domaine(s) :</legend>
+      <legend class="w-1/2 bg-gray-400 text-black p-2 rounded">Technologie(s) :</legend>
+    </div>
+  
+    <div class="flex items-center gap-2">
+      <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+        style="white-space: pre-wrap; word-wrap: break-word;" readonly>${domaineText}</textarea>
+  
+      <textarea class="w-1/2 h-32 p-2 border rounded-lg bg-gray-200 text-gray-700 
+        focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none overflow-auto" 
+        style="white-space: pre-wrap; word-wrap: break-word;" readonly>${technoText}</textarea>
+    </div>
+  
+    <!-- Sous-domaine -->
+    <div class="flex items-center gap-2 mt-4">
+      <legend class="w-38 bg-blue-200 text-black p-2 rounded">Sous-domaine :</legend>
+      <span class="bg-white p-2 border rounded">${competence.ct_ss_domaine || "Non disponible"}</span>
+    </div>
+  </fieldset>
+  </div>
+  
+          
+          `;
+  
+    });
+    Promise.all(fetchPromises).then(() => {
+      document.getElementById("tech-wrap").innerHTML = competenceHtml;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }).catch(error => {
     console.error("Error loading structure data:", error);
     document.getElementById("structure-wrap").innerHTML =

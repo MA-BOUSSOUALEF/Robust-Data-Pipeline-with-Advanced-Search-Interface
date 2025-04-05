@@ -30,7 +30,7 @@
     /* Main content styling (colors, size & shape) */
     #main-content {
       flex: 1;  /* This makes sure the main area expands as needed */
-      background-color: #f7f7f7; /* New background color for the main section */
+      background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1)); /* New background color for the main section */
       padding: 20px;
       border-radius: 10px;
       margin: 20px auto;
@@ -46,17 +46,17 @@
 <body>
   <!-- Header loaded externally -->
   <div id="header"></div>
-  
+  <div class="flex md:flex-row justify-center items-center gap-6 mt-10 py-4 max-w-7xl mx-auto border-y-2 border-black" >
+    <h1 class="text-5xl font-bold  hover:text-ut3 hover:text-4xl transition-all duration-300 text-center mb-4">Rechercher des compétences scientifiques</h1>
+    </div>
   <!-- Main content container -->
-  <div id="main-content">
-    <div class="max-w-screen-xl mx-auto mb-6">
-      <h1 class="text-3xl font-bold text-[#004A98]">EXPLORER LES COMPÉTENCES SCIENTIFIQUES</h1>
-      <p class="text-md text-gray-600">
-        Trouvez des compétences scientifiques selon vos filtres :
-        <br />
+  <div id="main-content" >
+  
+    <div class="max-w-screen-xl mx-auto mb-6 ">
+      <h1 class="text-3xl font-bold text-gray-800 uppercase shadow-sm items-center justify-center text-center">EXPLORER LES COMPÉTENCES SCIENTIFIQUES</h1>
+      <p class="text-lg text-gray-600 mt-2 items-center justify-center text-center">Trouvez des compétences scientifiques selon vos filtres :</p><br>
         <strong>Filtres :</strong> les trois niveaux de la nomenclature (Ref_Nomenclature_HCERES) /
         les directoires de l’UT3 (Ref_Directoires).
-      </p>
     </div>
 
     <div class="max-w-screen-xl mx-auto mb-6 bg-white shadow-lg rounded-lg p-6 space-y-4">
@@ -101,9 +101,9 @@
       <div id="results-container" class="mt-6"></div>
 
       <div id="pagination-controls" class="flex items-center justify-center space-x-4 mt-4 hidden">
-        <button id="prev-page-btn" class="filter-btn">Précédent</button>
+        <button id="prev-page-btn" class="px-6 py-3  bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition duration-300 shadow-md">Précédent</button>
         <div id="page-info" class="text-gray-700"></div>
-        <button id="next-page-btn" class="filter-btn">Suivant</button>
+        <button id="next-page-btn" class="px-6 py-3 bg-[#fbca00] text-white rounded-lg hover:bg-yellow-500 transition duration-300 shadow-md">Suivant</button>
       </div>
     </div>
   </div>

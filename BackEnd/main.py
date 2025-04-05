@@ -176,7 +176,6 @@ def get_techno():
         conn.close()
 
 
-
 # Api de Suggestion Ct_Intitule_Court_Fr From Table D_Competences_Techniques oui
 @app.get("/api/suggestions")
 def get_suggestions(query: str):
@@ -270,11 +269,10 @@ def get_ct_num_ss_domaine(ct_ss_domaine: str):
     finally:
         cursor.close()
         conn.close()
-        
-        
- 
 
+# Api detection de sous domaine a partir de ct_num non
 
+    
 ########################################################################## Affichage ############################################################################################################
 
 #http://localhost:8000/api/competence?intitule=Radioactivit%C3%A9%20-%20LAFARA 

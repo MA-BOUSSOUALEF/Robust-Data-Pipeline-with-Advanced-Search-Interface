@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CartoRecherche UT3</title>
+  <title>À propos - CartoRecherche UT3</title>
   <!-- Lien vers le CSS compilé (output.css) -->
   <link rel="stylesheet" href="../output.css">
   <!-- Inclusion de Font Awesome pour les icônes (si nécessaire) -->
@@ -12,123 +12,90 @@
 </head>
 <body class="bg-gray-100 font-sans">
   <!-- Header -->
-  <!-- <div id="header-placeholder"></div> -->
-  <header class="shadow-md bg-black">
-    <h1 class="text-2xl font-semibold text-white px-14 pt-3">CartoRecherche UT3</h1>
-    <div class="container mx-auto px-10 py-3 flex justify-between items-center">
-      <!-- Groupe pour le logo et le titre -->
-      <div class="flex items-center float-start">
-        <img src="../images/logo.png" alt="Icône Science" class="w-16 mr-5">
-      </div>
-      
-      
+  <div id="header"></div>
 
-      <!-- Navigation à droite -->
-      <nav class="flex-1 text-center items-center p-5">
-        <ul class="flex-row text-justify items-center justify-center ">
-          <li><a href="../index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
-          <li><a href="about.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
-          <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Recherche</a></li>
-          <li><a href="#" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">Contact</a></li>
-        </ul>
-        <div x-data="{ open: false }" class="relative">
-          <!-- Bouton principal -->
-          <button @click="open = !open" class="flex items-end float-right text-white text-lg font-bold">
-              <i class="fa-solid fa-language text-3xl hover:text-ut3 p-4"></i>
-          </button>
-      
-          <!-- Menu déroulant -->
-          <div x-show="open" @click.away="open = false"
-              class="absolute right-0 mt-14 w-32 bg-zinc-700 text-white rounded shadow-lg">
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">EN</a>
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">FR</a>
-          </div>
-      </div>
+  <!-- <div id="header-placeholder"></div> -->
+  
+
+    
       
       <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
       <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
-      
-        <button class="flex items-end float-right text-black bg-ut3">
-          <i class="fa-solid fa-magnifying-glass  text-3xl hover:text-ut3 hover:bg-black p-4"  title="cliquer pour chercher par compétence"></i>
-        </button>
-        </div>
 
-      </nav>
-    </div>
-  </header>
-  
+
   <!-- Contenu Principal -->
-  
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <!-- Colonne 1 -->
-      <div class="col-1" m-5>
-        <img src="../images/logo.png" alt="Logo UT3">
-        <div>
-          <strong> Université Toulouse III - Paul Sabatier </strong> <p>118 route de Narbonne 31062 TOULOUSE CEDEX 9 </p> Téléphone +33 (0)5 61 55 66 11
+  <main class="container mx-auto px-4 mt-10">
+      <!-- Titre principal -->
+      <section class="text-center">
+        <h2 class="text-3xl font-bold text-gray-800">À propos de CartoRecherche UT3</h2>
+        <p class="text-2xl text-gray-600 mt-4">
+          Découvrez les origines et les objectifs du projet de cartographie des activités de recherche.
+        </p>
+      </section>
+
+    <!-- Section sur le projet -->
+    <section class="mt-10">
+      <h3 class="text-2xl font-semibold text-gray-800">Le Projet</h3>
+      <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-6">
+        <p class="text-xl text-gray-600">
+          Les données présentées dans ce site sont issues du Projet de cartographie des activités de la
+          recherche mis en œuvre entre septembre 2023 et mai 2025 par le pôle Pilotage et Soutien de la
+          Recherche (PSPR) de la Direction de la Recherche et de la Valorisation (DReV) du Domaine
+          Recherche, Innovation, Valorisation et International (DRIVI) de l’Université de Toulouse.
+        </p>
+        <p class="text-xl text-gray-600 mt-4">
+          Ce projet a été financé dans le cadre du Dialogue stratégique et de gestion (financement Rectorat/MESR).
+        </p>
+      </div>
+    </section>
+
+    <!-- Section sur l'équipe -->
+    <section class="mt-10">
+      <h3 class="text-2xl font-semibold text-gray-800">L'Équipe</h3>
+      <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-6">
+        <p class="text-xl text-gray-600">
+          Ce site a été développé par une équipe de 5 étudiants en Master 1 Informatique dans le cadre de l’UE Projet qui s’est déroulée de janvier à avril 2025.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section des contacts -->
+    <section class="mt-10">
+      <h3 class="text-2xl font-semibold text-gray-800">Contacts</h3>
+      <div class="flex flex-wrap justify-center gap-6 mt-6">
+        <!-- Contact 1 -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 w-full md:w-1/2 text-center">
+          <h4 class="text-2xl font-semibold text-gray-800">Elise BELON</h4>
+          <a href="mailto:elise.belon@univ-tlse3.fr" class="text-blue-500 text-xl underline hover:text-blue-800">
+            elise.belon@univ-tlse3.fr
+          </a>
+          <p class="text-gray-600 mt-2">(Données relatives à ACTIHS et BABS)</p>
+        </div>
+        <!-- Contact 2 -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 w-full md:w-1/2 text-center">
+          <h4 class="text-2xl font-semibold text-gray-800">Pauline MINNE</h4>
+          <a href="mailto:elise.belon@univ-tlse3.fr" class="text-blue-500 text-xl underline hover:text-blue-800">
+            pauline.minne@univ-tlse3.fr
+          </a>
+          <p class="text-gray-600 mt-2">(Données relatives à MST2I, SDM et UPEE)</p>
         </div>
       </div>
-      <!-- Colonne 2 : Quick Links -->
-      <div class="col-2">
-        <h3>Liens utiles</h3>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Domaines</a></li>
-          <li><a href="#">Recherche</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <!-- Colonne 3 : Services -->
-      <div class="col-3">
-        <h3>Nous permettons d'explorer :</h3>
-        <ul>
-          <li><a href="#">- Les services proposées par l'université</a></li>
-          <li><a href="#">- Faire des recherrche normal</a></li>
-          <li><a href="#">- Faire des recherrche approfondie par filters</a></li>
-          <li><a href="#">- Se renseigner sur l'université</a></li>
-        </ul>
-      </div>
-      <!-- Colonne 4 : Newsletter -->
-      <div class="col-4">
-        <h3>Besoin d'aide ?</h3>
-        <form>
-          <i class="far fa-envelope"></i>
-          <input type="email" placeholder=" Description">
-          <button type="submit">envoyer</button>
-        </form>
-        <div class="social-icons">
-          <a href="https://www.facebook.com/universitedetoulouse" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.youtube.com/c/UniversiteToulousePaulSabatier" target="_blank"><i class="fab fa-youtube"></i></a>
-          <a href="https://www.instagram.com/ut3paulsabatier/" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/school/universite-paul-sabatier-toulouse-iii" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      </div>
-    </div>
-  </footer>
-  <!-- <div id="footer-placeholder"></div>
-
+    </section>
+  </main>
   <script>
-    // Fonction pour inclure le header et le footer
-    function includeHTML() {
-      const includeElements = document.querySelectorAll('[data-include]');
-      includeElements.forEach(el => {
-        const file = el.getAttribute('data-include');
-        fetch(file)
-          .then(response => response.text())
-          .then(data => {
-            el.innerHTML = data;
-          });
-      });
+    // Fonction pour charger les fichiers HTML externes
+    function includeHTML(elementId, filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
     }
 
-    // Inclure le header et le footer
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('header-placeholder').setAttribute('data-include', 'header.html');
-      document.getElementById('footer-placeholder').setAttribute('data-include', 'footer.html');
-      includeHTML();
-    });
-  </script>-->
+    // Charger le header et le footer
+    includeHTML("header", "../header.html");
+  </script>
+  
 </body>
 </html>

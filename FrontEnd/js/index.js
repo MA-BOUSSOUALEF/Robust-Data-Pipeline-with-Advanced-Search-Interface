@@ -321,7 +321,7 @@ function renderPage() {
     else structURL = '#'
 
     console.log(item);
-
+  
     lineDiv.innerHTML = `
       <div>
         <span class="chevron" data-index="${startIndex + index}">▼</span>

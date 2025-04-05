@@ -50,8 +50,8 @@ def get_db_connection():
     """ Connexion PostgreSQL """
     return psycopg2.connect(
         dbname="cartorecherche",
-        user="postgres",
-        password="Ilyas.99",
+        user="amine",
+        password="Aminereal2002@",
         host="localhost",
         port="5432",
         cursor_factory=RealDictCursor,
@@ -498,6 +498,25 @@ def get_Ct_ss_Domaine():
     finally:
         conn.close()  
         
+@app.get("/api/sous_domaines")
+def get_Ct_ss_Domaine_not_distinct():
+    conn = get_db_connection()
+    if not conn:
+        return {"error": "Impossible de se connecter à la base de données"}
+    try:
+        table =""
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT ct_num , ct_ss_domaine  FROM d_competences_techniques WHERE  ct_ss_domaine NOT ILIKE 'NaN'")
+        domaine = cursor.fetchall() 
+        return domaine
+    except Exception as e:
+        print(f"Erreur lors de la récupération des données : {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()        
+        
+  
+        
 @app.get("/api/platforme_sans_Doublons")
 def get_Ct_ss_Domaine_sans_Doublons():
     conn = get_db_connection()
@@ -613,7 +632,7 @@ def get_techno():
     try:
         table =""
         cursor = conn.cursor()
-        cursor.execute(f"SELECT  ct_num , ct_intitule_court_fr , ct_description_fr , ct_plateau , ct_ss_domaine,ct_url  FROM d_competences_techniques")  
+        cursor.execute(f"SELECT  ct_num , ct_intitule_court_fr , ct_description_fr , ct_plateau , ct_ss_domaine,ct_url,ct_ss_struct_num  FROM d_competences_techniques")  
         techno = cursor.fetchall() 
         return techno
     except Exception as e:
@@ -622,6 +641,22 @@ def get_techno():
     finally:
         conn.close()
 
+@app.get("/api/sousdomaineSansDoublons")
+def get_sous_domaine():
+    conn = get_db_connection()
+    if not conn:
+        return {"error": "Impossible de se connecter à la base de données"}
+    try:
+        table =""
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT DISTINCT ct_ss_domaine  FROM d_competences_techniques")  
+        techno = cursor.fetchall() 
+        return techno
+    except Exception as e:
+        print(f"Erreur lors de la récupération des données : {e}")
+        return {"error": str(e)}
+    finally:
+        conn.close()
 
 
 # Api de Suggestion Ct_Intitule_Court_Fr From Table D_Competences_Techniques oui
@@ -797,9 +832,132 @@ def get_Platform_ct_num():
 
 
 
+# @app.get("/api/sous_Structure")
+# def get_sous_Structure(j_ct_num: str):
+#     conn = get_db_connection()
+#     if not conn:
+#         return JSONResponse(content={"error": "Impossible de se connecter à la base de données"}, status_code=500)
+#     try:
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT DISTINCT s.struct_acronyme FROM d_structures s INNER JOIN j_struct_ct jsn ON s.struct_num = jsn.j_struct_num WHERE  jsn.j_ct_num = %s", (j_ct_num,))
+#         structure = cursor.fetchall()
+#         return JSONResponse(content=structure)
+#     except Exception as e:
+#         return JSONResponse(content={"error": str(e)}, status_code=500)
+#     finally:
+#         cursor.close()
+        
+#         conn.close()
+
+
+@app.get("/api/cmpetence_structure")
+def get_cmpetence_structure(structure_num: str):
+    conn = get_db_connection()
+    if not conn:
+        return JSONResponse(content={"error": "Impossible de se connecter à la base de données"}, status_code=500)
+
+    try:
+        cursor = conn.cursor()
+
+        # Décoder le structure_num
+        try:
+            decoded_structure_num = str(decode_hash(structure_num))
+        except Exception as e:
+            return JSONResponse(content={"error": f"Erreur lors du décodage de struct_num: {str(e)}"}, status_code=400)
+
+        # Exécuter la requête SQL avec le struct_num décodé
+        cursor.execute(
+            """
+            SELECT  s.ct_num , s.ct_intitule_court_fr , s.ct_description_fr , s.ct_plateau , s.ct_ss_domaine, s.ct_url , s.ct_ss_struct_num 
+            FROM d_competences_techniques s 
+            INNER JOIN j_struct_ct jsn ON s.ct_num = jsn.j_ct_num
+            WHERE jsn.j_struct_num = %s
+            """, 
+            (decoded_structure_num,)  # Utilisation de la valeur décodée
+        )
+        
+        competences = cursor.fetchall()
+
+        return JSONResponse(content=competences)  # Retourner les résultats sans encodage
+
+    except Exception as e:
+        return JSONResponse(content={"error": f"Erreur interne: {str(e)}"}, status_code=500)
+
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 
 
+
+
+
+
+@app.get("/api/Structure_num")
+def get_sous_structure(j_ct_num: str):
+    conn = get_db_connection()
+    if not conn:
+        return JSONResponse(content={"error": "Impossible de se connecter à la base de données"}, status_code=500)
+
+    try:
+        cursor = conn.cursor()
+        print(f"DEBUG - Valeur reçue j_ct_num: {j_ct_num}")  # Vérifier la valeur reçue
+
+        cursor.execute(
+            """
+            SELECT s.struct_num, s.struct_acronyme ,s.struct_nom_fr
+            FROM d_structures s 
+            INNER JOIN j_struct_ct jsn ON s.struct_num = jsn.j_struct_num 
+            WHERE jsn.j_ct_num = %s
+            """, 
+            (j_ct_num,)
+        )
+        structures = cursor.fetchall()
+
+        if not structures:
+            return JSONResponse(content={"error": "Aucune structure trouvée"}, status_code=404)
+
+        encoded_structures = []
+        for structure in structures:
+            try:
+                print(f"DEBUG - Structure récupérée: {structure}")  # Log des données récupérées
+                
+                struct_num = structure["struct_num"]  # Utilisation de RealDictRow
+
+                # Vérifier si struct_num est NULL
+                if struct_num is None:
+                    return JSONResponse(content={"error": "struct_num est NULL"}, status_code=500)
+
+                # Vérifier si struct_num est bien un entier avant l'encodage
+                try:
+                    struct_num = int(struct_num)  
+                except ValueError:
+                    return JSONResponse(content={"error": f"Valeur invalide pour struct_num: {struct_num}"}, status_code=500)
+
+                print(f"DEBUG - struct_num avant encodage: {struct_num}")  # Vérifier la valeur avant encodage
+                encoded_struct_num = encode_number(struct_num)  # Vérifier si encode_number fonctionne
+                print(f"DEBUG - struct_num encodé: {encoded_struct_num}")  # Log de l'encodage
+
+                encoded_structures.append({
+                    "struct_num": encoded_struct_num,
+                    "struct_acronyme": structure["struct_acronyme"],
+                    "struct_nom_fr": structure["struct_nom_fr"]
+                })
+            except Exception as e:
+                return JSONResponse(content={"error": f"Erreur lors de l'encodage de struct_num ({structure}): {str(e)}"}, status_code=500)
+
+        return JSONResponse(content=encoded_structures)
+
+    except Exception as e:
+        return JSONResponse(content={"error": f"Erreur interne: {str(e)}"}, status_code=500)
+
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 
 
