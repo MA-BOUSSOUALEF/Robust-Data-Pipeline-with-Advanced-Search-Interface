@@ -356,8 +356,7 @@ def get_sous_structures(code: str = Query(...)):
     cur.execute("""
         SELECT d_sous_structures.*
         FROM D_Structures
-        LEFT JOIN d_sous_structures ON D_Structures.struct_num = d_sous_structures.ss_struct_structure
-        LEFT JOIN j_sous_struct_localisation on d_sous_structures.ss_struct_num = j_sous_struct_localisation.j_ss_struct_num
+        LEFT JOIN d_sous_structures ON D_Structures.struct_num = d_sous_structures.ss_struct_structure       
         WHERE D_Structures.struct_num = %s
     """, (str(decode_hash(code)),))
     data = dictfetchall(cur)
@@ -365,6 +364,8 @@ def get_sous_structures(code: str = Query(...)):
     conn.close()
     return {"data": data}
     
+
+#    LEFT JOIN j_sous_struct_localisation on d_sous_structures.ss_struct_num = j_sous_struct_localisation.j_ss_struct_num
 
 
 @app.get("/details/")
@@ -513,6 +514,8 @@ GROUP BY
 
     """, (str(decode_hash(struct_num)),))
     data = dictfetchall(cur)
+
+    print(data)
     cur.close()
     conn.close()
     return {"data": data}
