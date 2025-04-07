@@ -14,41 +14,231 @@
   <!-- Header -->
   <div id="header"></div>
 
-  <!-- <div id="header-placeholder"></div> -->
-  
-
-    
-      
-      <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
-      <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
-
+  <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
 
   <!-- Contenu Principal -->
   <main class="container mx-auto px-4 mt-10">
-      <!-- Titre principal -->
-      <section class="text-center">
-        <h2 class="text-3xl font-bold text-gray-800">Aide</h2>
-        <p class="text-2xl text-gray-600 mt-4 ">
-          Découvrez les origines et les objectifs du projet de cartographie des activités de recherche.
-        </p>
-      </section>
+    <!-- Titre principal -->
+    <section class="text-center">
+      <h2 class="text-3xl font-bold text-gray-800">Aide</h2>
+      <p class="text-2xl text-gray-600 mt-4">
+        Découvrez les origines et les objectifs du projet de cartographie des activités de recherche.
+      </p>
+    </section>
 
-    <!-- Section sur le projet -->
-    <section class="mt-10">
-      <h3 class="text-2xl font-semibold text-gray-800"></h3>
-      <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-6">
-        <p class="text-3xl text-gray-600">
-        Texte
+    <!-- Section Préambule -->
+    <section class="mt-10 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">Préambule</h3>
+      <p class="text-gray-700">
+        Les données présentées dans ce site sont issues du Projet de cartographie des activités de la recherche qui a débuté en septembre 2023 
+        et qui est toujours en cours de déploiement. Aussi, les informations présentées se fondent sur une base de données encore incomplètement renseignée.
+        Le tableau ci-dessous indique l’état de complétude des données selon les unités de recherche de l’Université.
+      </p>
+
+      <!-- Exemple de tableau sur l'état de complétude des données -->
+      <div class="overflow-x-auto mt-6">
+        <table class="min-w-full border border-gray-300 text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="border px-3 py-2 text-left">Directoire</th>
+              <th class="border px-3 py-2 text-left">Unités dont la cartographie est complète</th>
+              <th class="border px-3 py-2 text-left">Unités dont la cartographie a été validée</th>
+              <th class="border px-3 py-2 text-left">Unités dont la cartographie est incomplète</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border px-3 py-2 align-top">ACTIHS</td>
+              <td class="border px-3 py-2 align-top">
+                CERTOP, CRESCO, LAIRDIL, LERASS, LEREPS, LGTO
+              </td>
+              <td class="border px-3 py-2 align-top">
+                Ensemble des Unités du Directoire
+              </td>
+              <td class="border px-3 py-2 align-top">-</td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2 align-top">BABS</td>
+              <td class="border px-3 py-2 align-top">
+                CAGT, CERCO, CERPOP, CRCA, DEFE, EVOLSAN, INFINITY, LBAE, LRSV
+              </td>
+              <td class="border px-3 py-2 align-top">-</td>
+              <td class="border px-3 py-2 align-top">
+                CBI, CRCT, CREFRE, F-CRIN, FR-AIB, I2MC, IPBS, IRSD, LIPME, LMGM, MCD, RESTORE, TONIC, TOXALIM
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2 align-top">MST2I</td>
+              <td class="border px-3 py-2 align-top">
+                CALMIP, ICA, IMFT, IMT, LGC, LMDC
+              </td>
+              <td class="border px-3 py-2 align-top">-</td>
+              <td class="border px-3 py-2 align-top">
+                IRIT, LAPLACE
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2 align-top">SdM</td>
+              <td class="border px-3 py-2 align-top">
+                LPT
+              </td>
+              <td class="border px-3 py-2 align-top">-</td>
+              <td class="border px-3 py-2 align-top">
+                CASTAING, CIRIMAT, ICT, SOFTMAT, L2IT, LCAR, LCPQ, LHFA, LPCNO, PHARMA-DEV, SPCMIB
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2 align-top">UPEE</td>
+              <td class="border px-3 py-2 align-top">
+                CESBIO, CRBE, GET, IRAP, LAERO, LEGOS, OMP
+              </td>
+              <td class="border px-3 py-2 align-top">CRBE</td>
+              <td class="border px-3 py-2 align-top">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-gray-700 mt-4">
+        Ce site web a été réalisé par une équipe d’étudiants en Master 1 Informatique dans le cadre de leur cursus. 
+        Il s’agit d’un prototype qui a vocation à évoluer pour améliorer certaines de ses fonctionnalités. 
+        Aussi, le cas échéant, des limites d’utilisation sont précisées ci-après.
+      </p>
+    </section>
+
+    <!-- Section Aide pour les différentes rubriques -->
+    <section class="mt-10 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">Aide pour les différentes rubriques du site</h3>
+
+      <!-- Rubrique "Découvrir les unités de recherche" -->
+      <div class="mb-8">
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">
+          Rubrique « Découvrir les unités de recherche »
+        </h4>
+        <p class="text-gray-700">
+          Cette rubrique permet, via une liste de choix (liste des unités de recherche organisées par Directoire), 
+          d’afficher une synthèse des informations de l’unité sélectionnée.
         </p>
-        <p class="text-2xl text-gray-600 mt-4">
-          guide d'utulisation
+        <p class="text-gray-700 mt-2">
+          Un menu en haut à droite permet à l’utilisateur de choisir les sous-rubriques qu’il souhaite afficher. 
+          De plus, l’ensemble de la fiche est exportable en PDF (l’export inclut les 3 sous-rubriques).
+        </p>
+        <p class="text-gray-700 mt-2">
+          <strong>Détail des 3 sous-rubriques :</strong><br>
+          <em>« Fiche structure »</em> : données générales sur l’unité de recherche et sa structuration.<br>
+          <em>« Fiche compétences scientifiques »</em> : pour chaque sous-structure, une liste de mots-clés décrivant 
+          ses compétences scientifiques ainsi qu’un texte « à mots-clés » environnant les mots-clés pour plus de précisions.<br>
+          <em>« Fiche compétences techniques »</em> : liste des compétences techniques de la structure (description synthétique).
+        </p>
+      </div>
+
+      <!-- Rubrique "Panorama scientifique des unités de recherche" -->
+      <div class="mb-8">
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">
+          Rubrique « Panorama scientifique des unités de recherche »
+        </h4>
+        <p class="text-gray-700">
+          Cette rubrique permet de consulter un graphique interactif représentant l’implication des unités 
+          de recherche de l’UT3 dans les différents domaines de recherche selon la nomenclature HCERES.
+        </p>
+        <p class="text-gray-700 mt-2">
+          Dans ce graphique interactif, l’utilisateur peut sélectionner différents niveaux de précision 
+          (du moins précis au plus précis) :
+          <ul class="list-disc list-inside mt-1">
+            <li>en ordonnée : domaines/panels/sous-panels HCERES</li>
+            <li>en légende : Directoire / Pôle COMUE / Unité</li>
+          </ul>
+          Ce graphique représente le nombre de fois où un sous-panel (et par conséquent panel et domaine) 
+          a été rattaché à un mot-clé dans la base de données du Projet de cartographie des activités de la recherche.
+        </p>
+        <p class="text-gray-700 mt-2 font-semibold">
+          Limites d’utilisation : ce graphique interactif a vocation à être optimisé pour une meilleure 
+          lecture et comparaison des données.
+        </p>
+      </div>
+
+      <!-- Rubrique "Rechercher une compétence scientifique" -->
+      <div class="mb-8">
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">
+          Rubrique « Rechercher une compétence scientifique »
+        </h4>
+        <p class="text-gray-700">
+          Le but de ce moteur de recherche est de permettre à l’utilisateur d’identifier une sous-structure 
+          d’une unité de recherche qui possède la compétence scientifique recherchée. Des liens URL permettent 
+          de facilement s’orienter ensuite vers les pages web de ces sous-structures et structures.
+        </p>
+        <p class="text-gray-700 mt-2">
+          Deux modes de recherche sont proposés :
+          <ul class="list-disc list-inside mt-1">
+            <li>
+              Une recherche dynamique par filtres et mot-clé (à privilégier). Il est possible de rechercher 
+              par domaine et/ou panel et/ou sous-panel HCERES et de combiner cette recherche en tapant un mot-clé 
+              dans la barre de recherche, ce qui a pour effet de rechercher dans la liste des mots-clés déjà 
+              présents dans la base de données.
+            </li>
+            <li>
+              Une recherche sémantique où les réponses sont hiérarchisées par degré de pertinence. Cependant, 
+              cette méthode nécessiterait de plus amples développements pour être plus robuste et pertinente. 
+              (Limite d’utilisation)
+            </li>
+          </ul>
+        </p>
+        <p class="text-gray-700 mt-2">
+          <strong>Organisation des réponses :</strong><br>
+          Les réponses sont organisées comme présenté dans l’exemple suivant :
+        </p>
+        <p class="mt-2 text-gray-700 italic bg-gray-50 p-4 rounded">
+          ▼<br>
+          Axe INTRA (Intelligence du travail) – CERTOP (Centre d'Etude et de Recherche Travail, Organisation, Pouvoir)
+          – Voir la fiche CERTOP – Voir le panorama scientifique CERTOP
+        </p>
+        <p class="text-gray-700 mt-2">
+          Les 4 zones de réponse sont cliquables :
+          <ul class="list-disc list-inside mt-1">
+            <li>Axe INTRA (Intelligence du travail) => Clic vers le site web de cette sous-structure</li>
+            <li>CERTOP (Centre d'Etude et de Recherche Travail, Organisation, Pouvoir) => Clic vers la page d’accueil du site web de la structure</li>
+            <li>Voir la fiche CERTOP => ouvre la rubrique « Découvrir les unités de recherche » sur la structure CERTOP</li>
+            <li>Voir le panorama scientifique CERTOP => ouvre la rubrique « Panorama scientifique » sur le CERTOP</li>
+          </ul>
+          <br>
+          ▼ Permet d’accéder à la liste des mots-clés pour la sous-structure correspondante.
+        </p>
+      </div>
+
+      <!-- Rubrique "Rechercher une compétence technique" -->
+      <div class="mb-8">
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">
+          Rubrique « Rechercher une compétence technique »
+        </h4>
+        <p class="text-gray-700">
+          Le but de ce moteur de recherche est de permettre d’identifier une unité de recherche 
+          qui possède la compétence technique recherchée. La recherche peut être réalisée par filtres et texte libre.
+        </p>
+        <p class="text-gray-700 mt-2">
+          <strong>Organisation des réponses :</strong><br>
+          Les réponses sont organisées comme présenté dans l’exemple suivant :
+        </p>
+        <p class="mt-2 text-gray-700 italic bg-gray-50 p-4 rounded">
+          ▼<br>
+          Installations d'imagerie 3D en paléontologie – archéologie – CAGT (Centre d'Anthropobiologie et de Génomique de Toulouse)
+          – Voir la fiche CAGT – Voir le panorama scientifique CAGT
+        </p>
+        <p class="text-gray-700 mt-2">
+          Les 4 zones de réponse sont cliquables :
+          <ul class="list-disc list-inside mt-1">
+            <li>Installations d'imagerie 3D en paléontologie – archéologie => Clic vers la page web dédiée à cette compétence technique</li>
+            <li>CAGT (Centre d'Anthropobiologie et de Génomique de Toulouse) => Clic vers la page d’accueil du site web de la structure</li>
+            <li>Voir la fiche CAGT => ouvre la rubrique « Découvrir les unités de recherche » sur la structure CAGT</li>
+            <li>Voir le panorama scientifique CAGT => ouvre le graphique « Panorama scientifique » sur la structure CAGT</li>
+          </ul>
+          <br>
+          ▼ Permet de consulter le détail de la compétence technique correspondante.
         </p>
       </div>
     </section>
-
-
-
   </main>
+
   <script>
     // Fonction pour charger les fichiers HTML externes
     function includeHTML(elementId, filePath) {
@@ -60,9 +250,9 @@
         .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
     }
 
-    // Charger le header et le footer
+    // Charger le header
     includeHTML("header", "./header.html");
   </script>
-  
+
 </body>
 </html>
