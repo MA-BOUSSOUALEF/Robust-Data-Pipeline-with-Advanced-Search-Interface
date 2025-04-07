@@ -50,8 +50,8 @@ def get_db_connection():
     """ Connexion PostgreSQL """
     return psycopg2.connect(
         dbname="cartorecherche",
-        user="postgres",
-        password="Ilyas.99",
+        user="amine",
+        password="Aminereal2002@",
         host="localhost",
         port="5432",
         cursor_factory=RealDictCursor,
