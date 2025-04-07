@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const containerWidth = document.getElementById("chart").clientWidth;
         const width = containerWidth;
         const height = Math.max(dynamicHeight, 400);
-        const margin = { top: 60, right: 200, bottom: 70, left: 500 };
+        const margin = { top: 60, right: 200, bottom: 70, left: 350 };
 
         const svg = d3.select("#chart")
             .append("svg")
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .attr("y", d => y1(d.orgValue) + ((y1.bandwidth() - effectiveBarHeight) / 2))
             .attr("width", d => {
                 if (!maxVal) return 0;
-                const fraction = Math.min((d.val / maxVal) *3 , 1);
+                const fraction = Math.min((d.val / maxVal)  , 1);
 
                 const barWidth = x(fraction) - x(0);
                 return barWidth < 5 ? 5 : barWidth; 
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const maxWords = maxWordsParam ? parseInt(maxWordsParam) : (nomenField === "j_hceres_sous_panel" ? 20 : 30);
         const yAxis = svg.append("g")
             .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(y0).tickFormat(d => truncateText(d, 13)));
+            .call(d3.axisLeft(y0).tickFormat(d => truncateText(d, 8)));
 
         yAxis.selectAll("text")
             .style("font-size", "10px")

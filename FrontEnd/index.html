@@ -1,148 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CartoRecherche UT3</title>
-  <!-- Lien vers le CSS compilé (output.css) -->
-  <link rel="stylesheet" href="output.css">
-  <!-- Inclusion de Font Awesome pour les icônes (si nécessaire) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
-<body class="bg-gray-100 font-sans">
-  <!-- Header -->
-  <!-- <div id="header-placeholder"></div> -->
-  <header class="shadow-md bg-black">
-    <h1 class="text-2xl font-semibold text-white px-14 pt-3">CartoRecherche UT3</h1>
-    <div class="container mx-auto px-10 py-3 flex justify-between items-center">
-      <!-- Groupe pour le logo et le titre -->
-      <div class="flex items-center float-start">
-        <img src="images/logo.png" alt="Icône Science" class="w-16 mr-5">
-      </div>
-
-      <!-- Navigation à droite -->
-      <nav class="flex-1 text-center items-center p-5">
-        <ul class="flex-row text-justify items-center justify-center ">
-          <li><a href="index.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 border-mt-8 font-medium text-2xl float-left px-5">Accueil</a></li>
-          <li><a href="pages/about.html" class="text-white border-b-4 border-transparent hover:border-ut3 p-4 font-medium text-2xl float-left px-5">À propos</a></li>
-        </ul>
-        <div x-data="{ open: false }" class="relative">
-          <!-- Bouton principal -->
-          <button @click="open = !open" class="flex items-end float-right text-white text-lg font-bold">
-              <i class="fa-solid fa-language text-3xl hover:text-ut3 p-4"></i>
-          </button>
-      
-          <!-- Menu déroulant -->
-          <div x-show="open" @click.away="open = false"
-              class="absolute right-0 mt-14 w-32 bg-zinc-700 text-white rounded shadow-lg">
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">EN</a>
-              <a href="#" class="block px-4 py-4 border-b-4 border-transparent hover:border-ut3">FR</a>
-          </div>
-      </div>
-      
-      <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
-      <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
-      
-        <button class="flex items-end float-right text-black bg-ut3">
-          <i class="fa-solid fa-magnifying-glass  text-3xl hover:text-ut3 hover:bg-black p-4"  title="cliquer pour chercher par compétence"></i>
-        </button>
-        </div>
-
-      </nav>
-    </div>
-  </header>
-  
-  <!-- Contenu Principal -->
-  <main class="container mx-auto px-4 mt-10 text-center">
-    <h2 class="text-3xl font-bold text-gray-800">Bienvenue sur le site de la Cartographie des activités de la recherche de l’Université de Toulouse</h2>
-    <p class="text-gray-600 mt-2 text-xl text-justify">
-      L’Université de Toulouse met à votre disposition cet outil de présentation des activités de ses 56 unités de recherche (UMR, URU, UAR, US, FR) permettant de visualiser en quelques clics l’éventail de leurs compétences scientifiques et techniques.
-    </p>
-    <main class="max-w-7xl mx-auto px-4 py-8">
-  <!-- Titre principal -->
-  <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Vous souhaitez ?...</h1>
-
-    <!-- Section Découvrir -->
-  <section class="mb-12">
-    <div class="bg-gray-50 p-8 rounded-xl shadow-md border border-gray-200">
-      <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Découvrir...</h2>
-      
-      <div class="grid md:grid-cols-2 gap-6 items-stretch">
-        <!-- Carte Unités de recherche -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition flex flex-col">
-          <div class="flex items-center justify-center gap-4">
-            <img src="images/document.png" alt="Document" class="w-20 h-20 mx-auto mb-4">
-            <a href="./unite.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-white font-medium py-2 px-6 rounded-lg transition">
-              Les unités de recherche de l'Université
-            </a>
-          </div>
-          <div class="mt-auto text-center">
-            <p class="text-gray-600 mt-4">
-              Via la sélection d’une fiche qui rassemble, pour chaque unité, l’ensemble des informations cartographiées (données générales, compétences scientifiques, compétences techniques).
-            </p>
-          </div>
-        </div>
-    
-        <!-- Carte Panorama -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition flex flex-col">
-          <!--<div class="text-center">-->
-            <div class="flex items-center justify-center gap-4">
-            <img src="images/graphique-5.png" alt="Graphique" class="w-20 h-20 mx-auto mb-4">
-            <a href="./panorama.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-white font-medium py-2 px-6 rounded-lg transition">
-              Le panorama des domaines de recherche
-            </a>
-          </div>
-          <div class="mt-auto text-center">
-            <p class="text-gray-600 mt-4">
-              Via un outil interactif permettant de comprendre en un coup d’œil et à plusieurs niveaux les domaines de Recherche de l’Université.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-    <!-- Section Rechercher -->
-  <section class="mb-12">
-    <div class="bg-gray-50 p-8 rounded-xl shadow-md border border-gray-200">
-      <div class="flex items-center justify-center gap-4 mb-6">
-        <img src="images/loupe.png" alt="Graphique" class="w-20 h-20">
-        <h2 class="text-2xl font-bold text-gray-700">Rechercher...</h2>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Option Compétence scientifique -->
-        <div class="flex items-start">
-          <div>
-            <a href="./rechercheScientifique.html" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-8 rounded-lg transition mr-4">
-              Une compétence scientifique
-            </a>
-            <p class="text-gray-600 mt-4">
-              Trouvez l’Unité de recherche qui propose la compétence technique recherchée.
-            </p>
-          </div>
-        </div>
-        
-        <!-- Option Compétence technique -->
-        <div class="flex items-start">
-          <div>
-            <a href="./RechercheTechnique.html" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-8 rounded-lg transition">
-              Une compétence technique
-            </a>
-            <p class="text-gray-600 mt-4">
-              Trouvez l’Unité de recherche qui met en œuvre la compétence scientifique recherchée (à l’échelle de la sous-structure).
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-</body>
-</html>
-=======
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -177,7 +32,7 @@
         <div class="bg-white  rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition flex flex-col" style ="height: 300px;">
           <div class="inline-flex items-center justify-center mt-auto py-4">
             <img src="images/document.png" alt="Document" class="w-36 h-auto mx-auto" style="height: 40%;">
-            <a href="pages/unite.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-black text-2xl font-medium py-2 px-6 rounded-lg transition ml-4">
+            <a href="./unite.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-black text-2xl font-medium py-2 px-6 rounded-lg transition ml-4">
               Les unités de recherche de l'Université
             </a>
             <br>
@@ -193,8 +48,8 @@
         <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-xl transition flex flex-col" style="height:300px;">
           <!--<div class="text-center">-->
             <div class="inline-flex items-center justify-center mt-auto" style ="height:300px;">
-            <img src="images/graphique-5.png" alt="Graphique" class="w-36 h-auto mx-auto mb-4" style = "height: 40%;">
-            <a href="pages/panorama.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-black text-2xl font-medium py-2 px-6 rounded-lg transition">
+            <img src="./images/graphique-5.png" alt="Graphique" class="w-36 h-auto mx-auto mb-4" style = "height: 40%;">
+            <a href="./panorama.html" class="inline-block bg-ut3 hover:bg-ut3-dark text-black text-2xl font-medium py-2 px-6 rounded-lg transition">
               Le panorama des domaines de recherche
             </a>
             <br>
@@ -262,4 +117,3 @@
   
 </body>
 </html>
->>>>>>> a126cc6027a5ac1dbc7d0ca3de5346ac9e1f9348

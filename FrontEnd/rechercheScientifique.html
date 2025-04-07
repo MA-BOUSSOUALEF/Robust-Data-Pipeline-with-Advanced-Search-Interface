@@ -1,12 +1,10 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recherche de Compétences</title>
-
+  
   <!-- Tailwind and external CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./css/style.css">
@@ -16,57 +14,49 @@
     integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+  
   <!-- Custom CSS for layout and main content styling -->
   <style>
     /* Ensure the page takes full height and uses a flex layout */
-    html,
-    body {
+    html, body {
       height: 100%;
       margin: 0;
       padding: 0;
     }
-
     body {
       display: flex;
       flex-direction: column;
     }
-
     /* Main content styling (colors, size & shape) */
     #main-content {
-      flex: 1;
-      /* This makes sure the main area expands as needed */
-      background-color: #f7f7f7;
-      /* New background color for the main section */
+      flex: 1;  /* This makes sure the main area expands as needed */
+      background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1)); /* New background color for the main section */
       padding: 20px;
       border-radius: 10px;
       margin: 20px auto;
-      max-width: 1200px;
-      /* Adjust width as necessary */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      /* Subtle shadow for a better shape */
+      max-width: 1200px;  /* Adjust width as necessary */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for a better shape */
     }
-
     /* Footer sticks to the bottom */
     #footer {
       margin-top: auto;
     }
   </style>
 </head>
-
 <body>
   <!-- Header loaded externally -->
   <div id="header"></div>
-
+  <div class="flex md:flex-row justify-center items-center gap-6 mt-10 py-4 max-w-7xl mx-auto border-y-2 border-black" >
+    <h1 class="text-5xl font-bold  hover:text-ut3 hover:text-4xl transition-all duration-300 text-center mb-4">Rechercher des compétences scientifiques</h1>
+    </div>
   <!-- Main content container -->
-  <div id="main-content">
+  <div id="main-content" >
+  
     <div class="max-w-screen-xl mx-auto mb-6">
       <h1 class="text-3xl font-bold text-[#004A98]">EXPLORER LES COMPÉTENCES SCIENTIFIQUES</h1>
       <p class="text-md text-gray-600">
-        Trouvez des compétences scientifiques selon vos filtres :
-        <br />
-        <strong>Filtres :</strong> les trois niveaux de la nomenclature (Ref_Nomenclature_HCERES) /
-        les directoires de l’UT3 (Ref_Directoires).
+        Trouvez des compétences scientifiques selon vos filtres ( les trois niveaux de la nomenclature HCERES ) :
+      
       </p>
     </div>
 
@@ -145,139 +135,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Footer loaded externally -->
-  <div id="footer"></div>
-
-  <!-- Script to load external HTML files -->
-  <script>
-    function includeHTML(elementId, filePath) {
-      fetch(filePath)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
-    }
-    includeHTML("header", "./header.html");
-    includeHTML("footer", "./footer.html");
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
-  <script src="./js/index.js" defer></script>
-</body>
-
-</html>
-=======
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recherche de Compétences</title>
-  
-  <!-- Tailwind and external CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="./css/style.css">
-  <meta name="author" content="Kritet Ilyas">
-  <link rel="stylesheet" href="output.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  
-  <!-- Custom CSS for layout and main content styling -->
-  <style>
-    /* Ensure the page takes full height and uses a flex layout */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    /* Main content styling (colors, size & shape) */
-    #main-content {
-      flex: 1;  /* This makes sure the main area expands as needed */
-      background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1)); /* New background color for the main section */
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 1200px;  /* Adjust width as necessary */
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for a better shape */
-    }
-    /* Footer sticks to the bottom */
-    #footer {
-      margin-top: auto;
-    }
-  </style>
-</head>
-<body>
-  <!-- Header loaded externally -->
-  <div id="header"></div>
-  <div class="flex md:flex-row justify-center items-center gap-6 mt-10 py-4 max-w-7xl mx-auto border-y-2 border-black" >
-    <h1 class="text-5xl font-bold  hover:text-ut3 hover:text-4xl transition-all duration-300 text-center mb-4">Rechercher des compétences scientifiques</h1>
-    </div>
-  <!-- Main content container -->
-  <div id="main-content" >
-  
-    <div class="max-w-screen-xl mx-auto mb-6 ">
-      <h1 class="text-3xl font-bold text-gray-800 uppercase shadow-sm items-center justify-center text-center">EXPLORER LES COMPÉTENCES SCIENTIFIQUES</h1>
-      <p class="text-lg text-gray-600 mt-2 items-center justify-center text-center">Trouvez des compétences scientifiques selon vos filtres :</p><br>
-        <strong>Filtres :</strong> les trois niveaux de la nomenclature (Ref_Nomenclature_HCERES) /
-        les directoires de l’UT3 (Ref_Directoires).
-    </div>
-
-    <div class="max-w-screen-xl mx-auto mb-6 bg-white shadow-lg rounded-lg p-6 space-y-4">
-      <div class="flex items-center space-x-4">
-        <button id="reset-filters" class="filter-btn">❌ Supprimer les filtres</button>
-      </div>
-
-      <div class="flex items-center space-x-4 mt-4">
-        <label class="font-semibold">Mode :</label>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="toggle-mode" class="sr-only peer" />
-          <div class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 relative">
-            <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full peer-checked:left-6 transition-all"></div>
-          </div>
-          <span class="ml-3 text-sm font-medium text-gray-900">Sémantique</span>
-        </label>
-      </div>
-
-      <div id="text-search">
-        <div class="relative w-full">
-          <input type="text" id="competence-text" placeholder="Rechercher une compétence (choisir dans la liste)..."
-            class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition" />
-          <div id="autocomplete-list" class="autocomplete hidden"></div>
-        </div>
-        <div class="grid grid-cols-3 gap-4 mt-4">
-          <select id="domaine" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-          <select id="panel" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-          <select id="sous_panel" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-        </div>
-      </div>
-
-      <div id="semantic-search" class="hidden">
-        <input type="text" id="competence-semantic" placeholder="Entrez une phrase pour la recherche sémantique..."
-          class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition" />
-        <button id="semantic-search-btn"
-          class="mt-4 px-6 py-2 bg-[#004A98] text-white font-semibold rounded-md hover:bg-[#002F66] transition">
-          Rechercher
-        </button>
-      </div>
-
-      <div id="loading-indicator" class="loading text-center text-gray-500">Chargement...</div>
-      <div id="results-container" class="mt-6"></div>
-
-      <div id="pagination-controls" class="flex items-center justify-center space-x-4 mt-4 hidden">
-        <button id="prev-page-btn" class="px-6 py-3  bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition duration-300 shadow-md">Précédent</button>
-        <div id="page-info" class="text-gray-700"></div>
-        <button id="next-page-btn" class="px-6 py-3 bg-[#fbca00] text-white rounded-lg hover:bg-yellow-500 transition duration-300 shadow-md">Suivant</button>
-      </div>
-    </div>
-  </div>
   
   <!-- Footer loaded externally -->
   <div id="footer"></div>
@@ -300,4 +157,3 @@
   <script src="./js/index.js" defer></script>
 </body>
 </html>
->>>>>>> a126cc6027a5ac1dbc7d0ca3de5346ac9e1f9348
