@@ -136,6 +136,14 @@ async function loadStructure() {
                     </tr>`)
         .join('');
     }
+
+     // <div class="mb-6">
+        // <h2 class="text-lg font-bold text-gray-800 bg-blue-100 inline-block px-2 py-1 rounded">
+         // Texte de présentation de la structure (en)
+        //</h2>
+       // <p class="mt-2 text-gray-700 leading-relaxed">${d.struct_presentation_en || ""}</p>
+        // </div>
+    //
     const address = await getAddress(d.struct_latitude, d.struct_longitude);
     let html = `
       <div class="pb-2 border-b-4 border-blue-700 mb-4">
@@ -188,7 +196,7 @@ async function loadStructure() {
         <div class="bg-gray-50 p-4 rounded text-sm space-y-2 text-gray-800">
           <p><span class="font-semibold">Composante ou Institut :</span> ${d.composante_ou_institut || ""}</p>
           <p><span class="font-semibold">Localisation :</span> ${d.struct_localisation || ""}</p>
-          <p><span class="font-semibold">Adresse :</span><br />${address.replace("-", '<br>')}</p>
+          <p><span class="font-semibold">Adresse :</span><br />${d.struct_adresse}</p>
           <p><span class="font-semibold">URL :</span> <a href="${d.struct_url ? d.struct_url.replace("#", '') : "#"}" target="_blank" class="text-blue-600 underline">${d.struct_url ? d.struct_url.replace("#", '') : ""}</a></p>
           <p><span class="font-semibold">Effectif (permanents) HCERES 2019 :</span> ${d.struct_effectif_perm_hceres2019 || ""}</p>
         </div>
@@ -207,12 +215,7 @@ async function loadStructure() {
         </h2>
         <p class="mt-2 text-gray-700 leading-relaxed">${d.struct_presentation_fr || ""}</p>
       </div>
-      <div class="mb-6">
-        <h2 class="text-lg font-bold text-gray-800 bg-blue-100 inline-block px-2 py-1 rounded">
-          Texte de présentation de la structure (en)
-        </h2>
-        <p class="mt-2 text-gray-700 leading-relaxed">${d.struct_presentation_en || ""}</p>
-      </div>
+  
       <div class="mt-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Équipes</h2>
         <div class="overflow-x-auto">
@@ -273,7 +276,7 @@ async function loadStructure() {
               <div class="mt-4">
                 <h2 class="text-lg font-semibold text-gray-900 bg-blue-100 px-4 py-2 rounded-md">Texte à mots-clés</h2>
                 <p class="text-gray-700 mt-2 text-sm leading-relaxed">
-                  ${element.ss_struct_texte_en}
+                  ${element.ss_struct_texte_fr}
                 </p>
               </div>
               <div class="mt-4">

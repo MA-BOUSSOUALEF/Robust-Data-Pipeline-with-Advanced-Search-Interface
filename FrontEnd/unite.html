@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explorer les Directoires</title>
+
+  <!-- Tailwind CSS and external styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="output.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <style>
+    /* Global page styles */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      background: #f7f7f7;
+    }
+    /* Main content container */
+    #main-content {
+      flex: 1;
+      margin: 20px auto;
+      max-width: 1200px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    /* Directory container style */
+    .directory {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    /* Directory header (accordion trigger) */
+    .directory-header {
+      background-color: #f0f0f0;
+      padding: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+    /* Laboratories list – hidden by default */
+    .laboratories {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: none;
+    }
+    /* Laboratory item style */
+    .laboratory {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .laboratory:last-child {
+      border-bottom: none;
+    }
+    .laboratory a {
+      color: #004A98;
+      text-decoration: none;
+    }
+    .laboratory a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header loaded externally -->
+  <div id="header"></div>
+
+  <!-- Main content container -->
+  <div id="main-content">
+    <div class="max-w-screen-xl mx-auto mb-6">
+        <h1 class="text-3xl font-bold text-[#004A98]">Explorer les Directoires</h1>
+        <p class="text-md text-gray-600">
+          Cliquez sur un directoire pour voir la liste des laboratoires associés.
+        </p>
+      </div>    <div id="results-container"></div>
+  </div>
+
+  <!-- Footer loaded externally -->
+  <div id="footer"></div>
+
+  <!-- Script to load external HTML files for header and footer -->
+  <script>
+    function includeHTML(elementId, filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
+    }
+    includeHTML("header", "./header.html");
+    includeHTML("footer", "./footer.html");
+  </script>
+
+  <!-- Main script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Fetch data from the directories endpoint.
+        const response = await fetch('http://localhost:8000/directories/');
+        const json = await response.json();
+        const data = json.data; // expected structure as provided
+
+        const container = document.getElementById('results-container');
+        container.innerHTML = '';
+
+        // Create an accordion container for each directory.
+        data.forEach(directory => {
+          const dirDiv = document.createElement('div');
+          dirDiv.classList.add('directory');
+
+          // Directory header: use directoire_nom
+          const header = document.createElement('div');
+          header.classList.add('directory-header');
+          header.textContent = directory.directoire.directoire_nom;
+          dirDiv.appendChild(header);
+
+          // Laboratories list container.
+          const labList = document.createElement('ul');
+          labList.classList.add('laboratories');
+          directory.laboratoires.forEach(lab => {
+            const li = document.createElement('li');
+            li.classList.add('laboratory');
+
+            // Link to fiche.html?code=struct_num
+            const link = document.createElement('a');
+            link.href = `./fiche.html?code=${lab.struct_num}`;
+            link.textContent = lab.struct_nom_fr;
+            li.appendChild(link);
+            labList.appendChild(li);
+          });
+          dirDiv.appendChild(labList);
+          container.appendChild(dirDiv);
+        });
+
+        // Set up accordion behavior:
+        // On click on a directory header, toggle its laboratory list and close the others.
+        const headers = document.querySelectorAll('.directory-header');
+        headers.forEach(header => {
+          header.addEventListener('click', () => {
+            // If the current list is visible, hide it; otherwise, hide all and show current.
+            const currentList = header.nextElementSibling;
+            if (currentList.style.display === 'block') {
+              currentList.style.display = 'none';
+            } else {
+              document.querySelectorAll('.laboratories').forEach(list => {
+                list.style.display = 'none';
+              });
+              currentList.style.display = 'block';
+            }
+          });
+        });
+      } catch (err) {
+        console.error('Erreur lors de la récupération des données :', err);
+      }
+    });
+  </script>
+</body>
+</html>

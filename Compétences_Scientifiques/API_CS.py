@@ -223,10 +223,14 @@ def search_competence(
             LEFT JOIN Ref_Nomenclature_HCERES h ON j.J_HCERES_Sous_Panel = h.HCERES_Sous_Panel_Fr
             {where_sql}
             ORDER BY similarity ASC
-            LIMIT 10;  -- you can limit as you wish
+            LIMIT 50;  -- you can limit as you wish
         """
+
+
         cur.execute(query_sql, tuple([query_embedding] + params))
         competencies = cur.fetchall()
+
+        print(competencies)
 
     # ------------------------- Build the results -------------------------
     results = []
@@ -350,16 +354,17 @@ def get_sous_structures(code: str = Query(...)):
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extensions.cursor)
     cur.execute("""
-        SELECT d_sous_structures.*,j_sous_struct_localisation.*
+        SELECT d_sous_structures.*
         FROM D_Structures
-        INNER JOIN d_sous_structures ON D_Structures.struct_num = d_sous_structures.ss_struct_structure
-        LEFT JOIN j_sous_struct_localisation on d_sous_structures.ss_struct_num = j_sous_struct_localisation.j_ss_struct_num
+        LEFT JOIN d_sous_structures ON D_Structures.struct_num = d_sous_structures.ss_struct_structure
         WHERE D_Structures.struct_num = %s
     """, (str(decode_hash(code)),))
     data = dictfetchall(cur)
     cur.close()
     conn.close()
     return {"data": data}
+   #,j_sous_struct_localisation.* 
+   # LEFT JOIN j_sous_struct_localisation on d_sous_structures.ss_struct_num = j_sous_struct_localisation.j_ss_struct_num
 
 
 @app.get("/details/")
@@ -398,6 +403,40 @@ def get_details(ss_struct_num: str = Query(...)):
     """, (ss_struct_num,))
     data = dictfetchall(cur)
     cur.close()
+    conn.close()
+    return {"data": data}
+
+
+@app.get("/directories/")
+def get_directories():
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT directoire_acronyme,directoire_nom FROM ref_directoires;")
+    directories = dictfetchall(cur)
+    cur.close()
+
+    data = []
+    for directory in directories:
+        # Use the directoire_acronyme value from the current row.
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("""
+            SELECT struct_nom_fr ,struct_num
+            FROM ref_directoires 
+            INNER JOIN d_structures 
+              ON d_structures.struct_directoire = ref_directoires.directoire_acronyme 
+            WHERE ref_directoires.directoire_acronyme = %s
+        """, (directory["directoire_acronyme"],))
+        laboratoires = dictfetchall(cur)
+     
+        for labo in laboratoires:
+            labo["struct_num"] = encode_number(int(labo["struct_num"]))     
+        
+        data.append({
+            "directoire": directory,
+            "laboratoires": laboratoires
+        })
+        cur.close()
+
     conn.close()
     return {"data": data}
 

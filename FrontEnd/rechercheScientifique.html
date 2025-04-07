@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recherche de Compétences</title>
-  
+
   <!-- Tailwind and external CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./css/style.css">
@@ -14,39 +15,48 @@
     integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  
+
   <!-- Custom CSS for layout and main content styling -->
   <style>
     /* Ensure the page takes full height and uses a flex layout */
-    html, body {
+    html,
+    body {
       height: 100%;
       margin: 0;
       padding: 0;
     }
+
     body {
       display: flex;
       flex-direction: column;
     }
+
     /* Main content styling (colors, size & shape) */
     #main-content {
-      flex: 1;  /* This makes sure the main area expands as needed */
-      background-color: #f7f7f7; /* New background color for the main section */
+      flex: 1;
+      /* This makes sure the main area expands as needed */
+      background-color: #f7f7f7;
+      /* New background color for the main section */
       padding: 20px;
       border-radius: 10px;
       margin: 20px auto;
-      max-width: 1200px;  /* Adjust width as necessary */
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for a better shape */
+      max-width: 1200px;
+      /* Adjust width as necessary */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for a better shape */
     }
+
     /* Footer sticks to the bottom */
     #footer {
       margin-top: auto;
     }
   </style>
 </head>
+
 <body>
   <!-- Header loaded externally -->
   <div id="header"></div>
-  
+
   <!-- Main content container -->
   <div id="main-content">
     <div class="max-w-screen-xl mx-auto mb-6">
@@ -76,25 +86,52 @@
       </div>
 
       <div id="text-search">
+        <div class="grid grid-cols-3 gap-4 mt-8 mb-8">
+          <select id="domaine"
+            class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
+          <select id="panel" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
+          <select id="sous_panel"
+            class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
+        </div>
         <div class="relative w-full">
           <input type="text" id="competence-text" placeholder="Rechercher une compétence (choisir dans la liste)..."
             class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition" />
           <div id="autocomplete-list" class="autocomplete hidden"></div>
         </div>
-        <div class="grid grid-cols-3 gap-4 mt-4">
-          <select id="domaine" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-          <select id="panel" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-          <select id="sous_panel" class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition"></select>
-        </div>
+
       </div>
 
       <div id="semantic-search" class="hidden">
+
+
+        <!-- Semantic filters: domaine → panel → sous_panel -->
+        <div id="semantic-filters"
+          class="hidden mb-8">
+          <h2 class="text-xl font-bold text-[#004A98]">Filtrer les résultats</h2>
+          <div class="grid grid-cols-3 gap-4">
+            <select id="semantic-domaine"
+              class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition">
+              <option value="">Tous les domaines</option>
+            </select>
+            <select id="semantic-panel"
+              class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition">
+              <option value="">Tous les panels</option>
+            </select>
+            <select id="semantic-sous-panel"
+              class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition">
+              <option value="">Tous les sous-panels</option>
+            </select>
+          </div>
+        </div>
+
         <input type="text" id="competence-semantic" placeholder="Entrez une phrase pour la recherche sémantique..."
           class="p-3 border rounded-md w-full focus:ring-2 focus:ring-[#004A98] transition" />
         <button id="semantic-search-btn"
           class="mt-4 px-6 py-2 bg-[#004A98] text-white font-semibold rounded-md hover:bg-[#002F66] transition">
           Rechercher
         </button>
+
+
       </div>
 
       <div id="loading-indicator" class="loading text-center text-gray-500">Chargement...</div>
@@ -107,10 +144,10 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Footer loaded externally -->
   <div id="footer"></div>
-  
+
   <!-- Script to load external HTML files -->
   <script>
     function includeHTML(elementId, filePath) {
@@ -124,8 +161,9 @@
     includeHTML("header", "./header.html");
     includeHTML("footer", "./footer.html");
   </script>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
   <script src="./js/index.js" defer></script>
 </body>
+
 </html>

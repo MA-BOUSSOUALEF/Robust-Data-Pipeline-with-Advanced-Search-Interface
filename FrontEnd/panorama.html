@@ -35,15 +35,15 @@
       padding: 20px;
       margin: 20px auto;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       border-radius: 10px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     /* Inner container styling using Tailwind classes updated to use 1200px as cap */
-    .container-1200 {
+    .container {
       width: 100%;
-      max-width: 1200px;
+      min-width:100%;
       margin: 0 auto;
     }
 
@@ -68,14 +68,17 @@
 
   <!-- Main content container -->
   <div id="main-content">
-    <div class="container-1200 bg-white shadow-lg rounded-lg p-6 space-y-6 mb-6">
-      <div class="container-1200 mb-6 border-b-4 border-blue-700 pb-2">
+
+    <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6 container" >
+      <div class="border-b-4 border-blue-700 pb-2">
         <h1 class="text-3xl font-bold text-gray-800">Panorama HCERES - Graphique Dynamique</h1>
         <p class="text-blue-700 font-semibold">
           Sélectionnez vos critères d'affichage
           <span class="block text-sm text-gray-600">Niveau HCERES (axe Y) et organisation (légende)</span>
         </p>
       </div>
+
+      <!-- Selectors -->
       <div class="flex flex-wrap gap-4">
         <div>
           <label for="nomenSelect" class="block text-gray-700 font-semibold mb-1">Niveau HCERES :</label>
@@ -85,27 +88,47 @@
             <option value="hceres_domaine_fr">Domaine</option>
           </select>
         </div>
-        <div>
+        <div id="filter-unite">
           <label for="orgSelect" class="block text-gray-700 font-semibold mb-1">Niveau d'organisation :</label>
+          <!-- Au lieu de "Sous-structure", "Unités", "Directoire" -->
           <select id="orgSelect" class="border border-gray-300 rounded p-2">
-            <option value="struct_acronyme">Sous-structure</option>
-            <option value="struct_poleut">Unité</option>
-            <option value="struct_directoire" selected>Directoire</option>
+            <option value="struct_acronyme" selected>Unité(s)</option>
+            <option value="struct_poleut">Pôle(s) COMUE</option>
+            <option value="struct_directoire" >Directoire(s)</option>
           </select>
+
         </div>
       </div>
+
+      <!-- Container for organization checkboxes -->
+      <div id="orgCheckboxes" class="flex flex-wrap gap-4 items-center mt-2"></div>
+
+      <div class="flex gap-4 mt-2">
+        <button id="selectAll" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+          Select All
+        </button>
+        <button id="deselectAll" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+          Deselect All
+        </button>
+      </div>
+
+      <!-- Chart container -->
       <div id="chart" class="border border-gray-200 rounded p-4 relative"></div>
     </div>
-    <div id="panoramaButton" class="container-1200 text-center mb-6 mt-6">
+
+    <div id="panoramaButton" class="max-w-6xl mx-auto text-center mt-6">
       <a href="panorama.html" class="bg-blue-700 text-white font-semibold py-2 px-4 rounded hover:bg-blue-800">
         Aller à la page Panorama
       </a>
     </div>
+
+    <div id="tooltip" class="tooltip hidden"></div>
+
   </div>
 
   <!-- Footer loaded externally -->
   <div id="footer"></div>
-  
+
   <div id="tooltip" class="tooltip hidden"></div>
   <script src="./js/panorama.js"></script>
   <script>
@@ -121,5 +144,7 @@
     includeHTML("header", "./header.html");
     includeHTML("footer", "./footer.html");
   </script>
+
 </body>
+
 </html>
