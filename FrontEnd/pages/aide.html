@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À propos - CartoRecherche UT3</title>
+  <!-- Lien vers le CSS compilé (output.css) -->
+  <link rel="stylesheet" href="../output.css">
+  <!-- Inclusion de Font Awesome pour les icônes (si nécessaire) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <div id="header"></div>
+
+  <!-- <div id="header-placeholder"></div> -->
+  
+
+    
+      
+      <!-- Ajoute Alpine.js si ce n'est pas encore fait -->
+      <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
+
+
+  <!-- Contenu Principal -->
+  <main class="container mx-auto px-4 mt-10">
+      <!-- Titre principal -->
+      <section class="text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Aide</h2>
+        <p class="text-2xl text-gray-600 mt-4 ">
+          Découvrez les origines et les objectifs du projet de cartographie des activités de recherche.
+        </p>
+      </section>
+
+    <!-- Section sur le projet -->
+    <section class="mt-10">
+      <h3 class="text-2xl font-semibold text-gray-800"></h3>
+      <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-6">
+        <p class="text-3xl text-gray-600">
+        Texte
+        </p>
+        <p class="text-2xl text-gray-600 mt-4">
+          guide d'utulisation
+        </p>
+      </div>
+    </section>
+
+
+
+  </main>
+  <script>
+    // Fonction pour charger les fichiers HTML externes
+    function includeHTML(elementId, filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
+    }
+
+    // Charger le header et le footer
+    includeHTML("header", "../header.html");
+  </script>
+  
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -86,3 +87,125 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compétence Techniques</title>
+  <script src="https://cdn.tailwindcss.com"></script> 
+  <link rel="stylesheet" href="output.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXRNqO85eD0iBk6Vp1Z3MJGbOn5k63TZ3D9UHZ6K5JcIY3XKjpHu9DmN4V1Yz8+OMuU9J2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+</head>
+<body class="bg-white flex flex-col min-h-screen">
+  <div id="header"> </div>
+  <div class="w-full max-w-8xl p-6 bg-gray-200  mx-auto">
+    <div class="flex md:flex-row justify-center items-center gap-6 mt-10 py-4 max-w-7xl mx-auto border-y-2 border-black" >
+    <h1 class="text-5xl font-bold  hover:text-ut3 hover:text-4xl transition-all duration-300 text-center mb-4">Rechercher des compétences techniques</h1>
+    </div><!-- Ligne des Titres -->
+    <div class="mt-10"></div>
+    
+    <div class="flex justify-between items-center gap-6 mb-5">
+      <h1 class="text-lg font-semibold text-gray-700 flex-1 text-center " style="margin-right: -30px ; margin-left :-40px">Recherche de intitul</h1>
+      <h1 class="text-lg font-semibold text-gray-700 flex-1 " style="margin-right: -70px">Recherche par domaine </h1>
+      <h1 class="text-lg font-semibold text-gray-700 flex-1 " style="margin-right: -60px">Recherche par sous domaine</h1>
+      <h1 class="text-lg font-semibold text-gray-700 flex-1 ">Recherche par platforme</h1>
+      <h1 class="text-lg font-semibold text-gray-700 flex-1" style="margin-left : -100px">Recherche par Technologie  </h1>
+    </div>
+    <!-- Ligne de l'input + Sélecteurs -->
+    <div class="flex justify-between items-center gap-6">
+      <!-- Champ de recherche -->
+      <div class="relative flex-1">
+        <input 
+          type="text" 
+          id="search-input" 
+          class="w-full h-12 p-2 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none" 
+          placeholder="Tapez un domaine..."
+          autocomplete="off"
+        />
+        <!-- Liste des suggestions sous l'input (positionnée avec "absolute") -->
+        <ul 
+          id="suggestions-list" 
+          class="absolute left-0 top-full w-full bg-white border rounded-lg shadow-lg max-h-40 overflow-y-auto  mt-1"
+        >
+          <!-- Les éléments de la liste des suggestions seront ajoutés dynamiquement ici -->
+        </ul>  
+      </div>
+      <!-- Sélecteurs -->
+      
+    
+  
+      <select id="domaine-list" class="flex-1 h-12 p-2 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+        <option value="">Chargement...</option>
+      </select>
+      <select id="ss_domaine-list" class="flex-1 h-12 p-2 w-1 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+        <option value="">Chargement...</option>
+      </select>
+      <select id="platforme-list" class="flex-1 h-12 p-2 w-1 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+        <option value="">Chargement...</option>
+      </select>
+      <select id="Techno-list" class="flex-1 h-12 p-2 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+        <option value="">Chargement...</option>
+      </select>
+      <button id ="recherche" class="px-6 py-2 bg-[#fbca00]  text-white font-semibold rounded-lg shadow-md 
+      hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 
+      focus:ring-opacity-75 transition-all">
+Rechercher
+</button>
+    </div>
+    <div class="mt-10"></div>
+    <div class="w-3/4 mx-auto bg-gray-300 flex flex-col items-center">
+      <h1 class="text-3xl font-bold text-gray-800 uppercase shadow-sm mt-10">EXPLORER LES COMPÉTENCES TECHNIQUES</h1>
+        <p class="text-lg text-gray-600 mt-2">Trouvez des compétences techniques selon vos filtres :</p>
+      <div id="mother-div" class="w-full mt-4 flex flex-col items-center justify-center text-center " style="min-height: 330px;">
+        
+    
+        <div id="resultats" class="w-3/4 mb-8">
+            <!-- Le contenu dynamique sera ajouté ici -->
+        </div>
+    </div>
+    
+    
+      <!-- Conteneur des boutons de pagination centré en bas -->
+      <div id="pagination" class="mt-8 mb-4 flex justify-center space-x-4 w-full">
+        <button id="precedent" class="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition duration-300 shadow-md hidden">
+          Précédent
+        </button> 
+        <button id="suivant" class="px-6 py-3 bg-[#fbca00] text-white rounded-lg hover:bg-yellow-500 transition duration-300 shadow-md hidden">
+          Suivant
+        </button>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+    </div>
+  </div>
+
+  <div id="footer" class="mt-auto"></div>
+  <script src="../BackEnd/main.js"></script>
+  <script>
+    // Fonction pour charger les fichiers HTML externes
+    function includeHTML(elementId, filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error("Erreur lors du chargement de " + filePath, error));
+    }
+
+    // Charger le header et le footer
+    includeHTML("header", "./header.html");
+    includeHTML("footer", "./footer.html");
+  </script>
+</body>
+</html>
+>>>>>>> a126cc6027a5ac1dbc7d0ca3de5346ac9e1f9348
