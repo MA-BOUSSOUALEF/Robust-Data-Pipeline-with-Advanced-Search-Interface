@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>À propos - CartoRecherche UT3</title>
+  <title>Aide - CartoRecherche UT3</title>
   <!-- Lien vers le CSS compilé (output.css) -->
   <link rel="stylesheet" href="./output.css">
   <!-- Inclusion de Font Awesome pour les icônes (si nécessaire) -->
@@ -149,12 +149,11 @@
             <li>en ordonnée : domaines/panels/sous-panels HCERES</li>
             <li>en légende : Directoire / Pôle COMUE / Unité</li>
           </ul>
-          Ce graphique représente le nombre de fois où un sous-panel (et par conséquent panel et domaine) 
-          a été rattaché à un mot-clé dans la base de données du Projet de cartographie des activités de la recherche.
         </p>
-        <p class="text-gray-700 mt-2 font-semibold">
-          Limites d’utilisation : ce graphique interactif a vocation à être optimisé pour une meilleure 
-          lecture et comparaison des données.
+        <p class="text-gray-700 mt-2">
+          Dans la base de données, chaque compétence scientifique est rattachée à un ou plusieurs sous-panels HCERES. 
+          Ce graphique correspond à la synthèse de ce travail de rattachement : il illustre la répartition/proportion des 
+          compétences scientifiques d’une unité de recherche (et en cascade Pôle et Directoire) dans les sous-panels HCERES (et en cascade dans les panels et domaines HCERES).
         </p>
       </div>
 
@@ -169,28 +168,18 @@
           de facilement s’orienter ensuite vers les pages web de ces sous-structures et structures.
         </p>
         <p class="text-gray-700 mt-2">
-          Deux modes de recherche sont proposés :
-          <ul class="list-disc list-inside mt-1">
-            <li>
-              Une recherche dynamique par filtres et mot-clé (à privilégier). Il est possible de rechercher 
-              par domaine et/ou panel et/ou sous-panel HCERES et de combiner cette recherche en tapant un mot-clé 
-              dans la barre de recherche, ce qui a pour effet de rechercher dans la liste des mots-clés déjà 
-              présents dans la base de données.
-            </li>
-            <li>
-              Une recherche sémantique où les réponses sont hiérarchisées par degré de pertinence. Cependant, 
-              cette méthode nécessiterait de plus amples développements pour être plus robuste et pertinente. 
-              (Limite d’utilisation)
-            </li>
-          </ul>
+          Le moteur de recherche permet une recherche dynamique par filtres et mot-clé (à privilégier). Il est possible de rechercher 
+          par domaine et/ou panel et/ou sous-panel HCERES et de combiner cette recherche en tapant un mot-clé 
+          dans la barre de recherche, ce qui a pour effet de rechercher dans la liste des mots-clés déjà 
+          présents dans la base de données.
         </p>
         <p class="text-gray-700 mt-2">
           <strong>Organisation des réponses :</strong><br>
           Les réponses sont organisées comme présenté dans l’exemple suivant :
         </p>
         <p class="mt-2 text-gray-700 italic bg-gray-50 p-4 rounded">
-          ▼<br>
-          Axe INTRA (Intelligence du travail) – CERTOP (Centre d'Etude et de Recherche Travail, Organisation, Pouvoir)
+          
+          ▼ Axe INTRA (Intelligence du travail) – CERTOP (Centre d'Etude et de Recherche Travail, Organisation, Pouvoir)
           – Voir la fiche CERTOP – Voir le panorama scientifique CERTOP
         </p>
         <p class="text-gray-700 mt-2">
@@ -213,15 +202,17 @@
         </h4>
         <p class="text-gray-700">
           Le but de ce moteur de recherche est de permettre d’identifier une unité de recherche 
-          qui possède la compétence technique recherchée. La recherche peut être réalisée par filtres et texte libre.
+          qui possède la compétence technique recherchée. La recherche peut être réalisée par filtres et texte libre. 
+          <br>
+          N.B. : Le filtre technologie est pour l'instant inopérant (limite d’utilisation).
         </p>
         <p class="text-gray-700 mt-2">
           <strong>Organisation des réponses :</strong><br>
           Les réponses sont organisées comme présenté dans l’exemple suivant :
         </p>
         <p class="mt-2 text-gray-700 italic bg-gray-50 p-4 rounded">
-          ▼<br>
-          Installations d'imagerie 3D en paléontologie – archéologie – CAGT (Centre d'Anthropobiologie et de Génomique de Toulouse)
+          
+          ▼ Installations d'imagerie 3D en paléontologie – archéologie – CAGT (Centre d'Anthropobiologie et de Génomique de Toulouse)
           – Voir la fiche CAGT – Voir le panorama scientifique CAGT
         </p>
         <p class="text-gray-700 mt-2">
